@@ -23,4 +23,4 @@ function validateRole(role) {
 	return validate(role, schema);
 }
 
-export { Role, validateRole };
+export { Role, validateRole, roleSchema };
