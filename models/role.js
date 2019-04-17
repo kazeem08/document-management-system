@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import Joi from 'joi';
+import { validate } from '@babel/types';
 
 //creating roleSchema
 const roleSchema = new mongoose.Schema({
@@ -12,3 +14,14 @@ const roleSchema = new mongoose.Schema({
 
 //creating Role model
 const Role = mongoose.model('Role', roleSchema);
+
+//joi validation for role model
+function validateRole(role) {
+	const schema = {
+		title: Joi.string().required()
+	};
+
+	return validate(role, schema);
+}
+
+export { Role, validateRole };
