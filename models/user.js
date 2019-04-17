@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import { roleSchema } from './role';
 
 //creating user schema
 const userSchema = new mongoose.Schema({
@@ -34,8 +36,21 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		minlength: 6,
 		maxlength: 200
+	},
+	role: {
+		type: roleSchema,
+		required: true
 	}
 });
+
+//getting the jwt key from the environment
+const jwtKey = process.env.jwtPrivateKey;
+
+//generating jwt authentication key
+userSchema.methods.generateAuthToken = function() {
+	const token = jwt.sign({ _id: this._id, role: this.role }, jwtKey);
+	return token;
+};
 
 //creating user model
 const User = mongoose.model('User', userSchema);
@@ -60,9 +75,8 @@ function validateUser(user) {
 			.max(200)
 			.required()
 			.email(),
-		password: Joi.string()
-			.min(6)
-			.max(200)
+		password: Joi.string().min(6),
+		roleId: Joi.string().required()
 	};
 
 	return validate(user, schema);
