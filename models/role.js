@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Joi from 'joi';
-import { validate } from '@babel/types';
 
 //creating roleSchema
 const roleSchema = new mongoose.Schema({

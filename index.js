@@ -12,4 +12,8 @@ mongoose
 	.connect(db, { useNewUrlParser: true })
 	.then(() => console.log(`conected to ${db}`));
 
-app.listen(port, () => console.log(`listening on port ${port}...`));
+if (process.env.NODE_ENV !== 'tets') {
+	app.listen(port, () => console.log(`listening on port ${port}...`));
+}
+
+export { app };
