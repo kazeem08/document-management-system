@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { roleSchema } from './role';
+import config from 'config';
 
 //creating user schema
 const userSchema = new mongoose.Schema({
@@ -16,7 +17,7 @@ const userSchema = new mongoose.Schema({
 		minlength: 3,
 		maxlength: 100
 	},
-	username: {
+	userName: {
 		type: String,
 		required: true,
 		unique: true,
@@ -44,11 +45,13 @@ const userSchema = new mongoose.Schema({
 });
 
 //getting the jwt key from the environment
-const jwtKey = process.env.jwtPrivateKey;
 
 //generating jwt authentication key
 userSchema.methods.generateAuthToken = function() {
-	const token = jwt.sign({ _id: this._id, role: this.role }, jwtKey);
+	const token = jwt.sign(
+		{ _id: this._id, role: this.role },
+		config.get('jwtPrivateKey')
+	);
 	return token;
 };
 
