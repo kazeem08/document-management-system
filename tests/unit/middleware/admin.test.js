@@ -1,8 +1,9 @@
-import 'babel-polyfill';
-import mongoose from 'mongoose';
-import { User } from '../../../models/user';
-import { admin } from '../../../middleware/admin';
-import { Role } from '../../../models/role';
+// import 'babel-polyfill';
+
+// import mongoose from 'mongoose';
+// import { User } from '../../../models/user';
+// import { admin } from '../../../middleware/admin';
+// import { Role } from '../../../models/role';
 
 // describe('admin validation', () => {
 // 	it('should return 403 if user is not an admin', () => {
@@ -13,9 +14,7 @@ import { Role } from '../../../models/role';
 // 				title: 'Regular'
 // 			}
 // 		};
-// 		const req = {
-// 			user
-// 		};
+// 		const req = { user };
 // 		// const token = new User(user).generateAuthToken();
 
 // 		const res = {};
