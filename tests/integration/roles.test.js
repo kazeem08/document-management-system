@@ -5,7 +5,6 @@ import { Role } from '../../models/role';
 import { User } from '../../models/user';
 import { app } from '../../index';
 
-// //validate if user is logged in
 describe('Roles', () => {
 	describe('POST ', () => {
 		let token;
@@ -44,6 +43,15 @@ describe('Roles', () => {
 		});
 
 		it('should return 400 if category is less than 5 characters', async () => {
+			user.role.title = 'Admin';
+			token = new User(user).generateAuthToken();
+			title = 'fff';
+			const res = await exec();
+
+			expect(res.status).toBe(400);
+		});
+
+		it('should return 400 if category is more than 30 characters', async () => {
 			user.role.title = 'Admin';
 			token = new User(user).generateAuthToken();
 			title = new Array(35).join('k');
