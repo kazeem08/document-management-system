@@ -132,7 +132,6 @@ describe('Users', () => {
 			const newUser = {
 				firstName: 'Kafffff',
 				lastName: 'lanre',
-				userName: 'kazeem08',
 				email: 'kazeem08@gmail.com',
 				password: '123456',
 				roleId: mongoose.Types.ObjectId()
@@ -219,4 +218,6 @@ describe('Users', () => {
 			expect(res.status).toBe(200);
 		});
 	});
+
+	describe('PUT', () => {});
 });
