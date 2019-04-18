@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { roleSchema } from './role';
+import dotenv from 'dotenv';
+dotenv.config();
 
 //creating user schema
 const userSchema = new mongoose.Schema({
@@ -16,7 +18,7 @@ const userSchema = new mongoose.Schema({
 		minlength: 3,
 		maxlength: 100
 	},
-	username: {
+	userName: {
 		type: String,
 		required: true,
 		unique: true,
