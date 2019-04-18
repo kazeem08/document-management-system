@@ -219,5 +219,55 @@ describe('Users', () => {
 		});
 	});
 
-	describe('PUT', () => {});
+	describe('PUT', () => {
+		let token;
+		const user = new User({
+			firstName: 'Kazeem',
+			lastName: 'lanre',
+			userName: 'kazeem08',
+			email: 'kazeem08@gmail.com',
+			password: '123456',
+			role: {
+				_id: mongoose.Types.ObjectId().toHexString(),
+				title: 'Regular'
+			}
+		});
+
+		beforeEach(() => {
+			token = new User(user).generateAuthToken();
+		});
+
+		afterEach(async () => {
+			await User.deleteMany();
+		});
+		it('should return 401 if user is not logged in', async () => {
+			const id = mongoose.Types.ObjectId();
+			const res = await request(app).put('/api/users/' + id);
+			expect(res.status).toBe(401);
+		});
+
+		it('should return 404 if ID is invalid', async () => {
+			const id = 1;
+			const res = await request(app)
+				.put('/api/users/' + id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(404);
+		});
+
+		it('should return 404 if ID of user does not exist', async () => {
+			const id = mongoose.Types.ObjectId();
+			const res = await request(app)
+				.put('/api/users/' + id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(404);
+		});
+
+		it('should update check if user id is valid', async () => {
+			await user.save();
+			const res = await request(app)
+				.put('/api/users/' + user._id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(200);
+		});
+	});
 });

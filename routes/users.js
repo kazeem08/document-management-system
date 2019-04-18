@@ -45,4 +45,10 @@ router.post('/', async (req, res) => {
 	res.send(user);
 });
 
+router.put('/:id', validateObjectId, auth, async (req, res) => {
+	const user = await User.findById(req.params.id);
+	if (!user) return res.status(404).send('User does not exist');
+	res.send();
+});
+
 export { router as users };
