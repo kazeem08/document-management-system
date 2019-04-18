@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { roleSchema } from './role';
-import config from 'config';
+import dotenv from 'dotenv';
+dotenv.config();
 
 //creating user schema
 const userSchema = new mongoose.Schema({
@@ -45,13 +46,11 @@ const userSchema = new mongoose.Schema({
 });
 
 //getting the jwt key from the environment
+const jwtKey = process.env.jwtPrivateKey;
 
 //generating jwt authentication key
 userSchema.methods.generateAuthToken = function() {
-	const token = jwt.sign(
-		{ _id: this._id, role: this.role },
-		config.get('jwtPrivateKey')
-	);
+	const token = jwt.sign({ _id: this._id, role: this.role }, jwtKey);
 	return token;
 };
 

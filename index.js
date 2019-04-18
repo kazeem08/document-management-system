@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import 'dotenv/config';
-import config from 'config';
 import { roles } from './routes/roles';
 
 const app = express();
@@ -13,13 +12,8 @@ const port = process.env.PORT;
 let db = process.env.db;
 if (process.env.NODE_ENV === 'test') db = process.env.db_test;
 
-// let db = config.get('db');
-// clea;
-
-// const port = process.env.PORT || 3000;
-
 mongoose
-	.connect(db, { useNewUrlParser: true })
+	.connect(db, { useNewUrlParser: true, useCreateIndex: true })
 	.then(() => console.log(`connected to ${db}`));
 
 if (process.env.NODE_ENV !== 'test') {
