@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import request from 'supertest';
 import mongoose from 'mongoose';
 import { User } from '../../models/user';
+import { Role } from '../../models/role';
 import { app } from '../../index';
 
 describe('Users', () => {
@@ -120,38 +121,28 @@ describe('Users', () => {
 	});
 
 	describe('POST', () => {
-		let token;
-		const user = new User({
-			firstName: 'Kazeem',
-			lastName: 'lanre',
-			userName: 'kazeem08',
-			email: 'kazeem08@gmail.com',
-			password: '123456',
-			role: {
-				_id: mongoose.Types.ObjectId().toHexString(),
-				title: 'Regular'
-			}
-		});
-
-		beforeEach(() => {
-			token = new User(user).generateAuthToken();
-		});
+		beforeEach(() => {});
 
 		afterEach(async () => {
 			await User.deleteMany();
 		});
 
-		it('should return 401 if user is not logged in', async () => {
-			token = '';
-			const res = await request(app).post('/api/users');
-			expect(res.status).toBe(401);
-		});
+		it('should return 400 if user already exists', async () => {
+			const newUser = {
+				firstName: 'Kazeem',
+				lastName: 'lanre',
+				userName: 'kazeem08',
+				email: 'kazeem08@gmail.com',
+				password: '123456',
+				roleId: mongoose.Types.ObjectId()
+			};
 
-		it('should return 403 if user is not an admin', async () => {
+			await User.collection.insertMany([newUser]);
+
 			const res = await request(app)
 				.post('/api/users')
-				.set('x-auth-token', token);
-			expect(res.status).toBe(403);
+				.send(newUser);
+			expect(res.status).toBe(400);
 		});
 	});
 });

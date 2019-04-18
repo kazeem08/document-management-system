@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { roleSchema } from './role';
 import dotenv from 'dotenv';
+import Joi from 'joi';
 dotenv.config();
 
 //creating user schema
@@ -81,7 +82,7 @@ function validateUser(user) {
 		roleId: Joi.string().required()
 	};
 
-	return validate(user, schema);
+	return Joi.validate(user, schema);
 }
 
-export { User, validateUser };
+export { User, validateUser as validate };

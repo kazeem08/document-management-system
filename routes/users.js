@@ -1,5 +1,5 @@
 import express from 'express';
-import { User } from '../models/user';
+import { User, validate } from '../models/user';
 import { auth } from '../middleware/auth';
 import { admin } from '../middleware/admin';
 import { validateObjectId } from '../middleware/validateObjectId';
@@ -17,7 +17,13 @@ router.get('/:id', validateObjectId, [auth, admin], async (req, res) => {
 	res.send(user);
 });
 
-router.post('/', [auth, admin], async (req, res) => {
+router.post('/', async (req, res) => {
+	// const { error } = validate(req.body);
+	// if (error) return res.status(400).send(error.details[0].message);
+
+	const user = await User.findOne({ email: req.body.email });
+	if (user) return res.status(400).send('user already exist');
+
 	res.send();
 });
 

@@ -134,7 +134,7 @@ describe('Roles', () => {
 			expect(res.status).toBe(400);
 		});
 
-		it('should return 400 if r isole more than 30 characters', async () => {
+		it('should return 400 if role is more than 30 characters', async () => {
 			user.role.title = 'Admin';
 			token = new User(user).generateAuthToken();
 			title = new Array(35).join('k');
