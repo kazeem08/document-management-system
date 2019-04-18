@@ -118,4 +118,33 @@ describe('Users', () => {
 			expect(res.body).toHaveProperty('email', 'kazeem08@gmail.com');
 		});
 	});
+
+	describe('POST', () => {
+		let token;
+		const user = new User({
+			firstName: 'Kazeem',
+			lastName: 'lanre',
+			userName: 'kazeem08',
+			email: 'kazeem08@gmail.com',
+			password: '123456',
+			role: {
+				_id: mongoose.Types.ObjectId().toHexString(),
+				title: 'Regular'
+			}
+		});
+
+		beforeEach(() => {
+			token = new User(user).generateAuthToken();
+		});
+
+		afterEach(async () => {
+			await User.deleteMany();
+		});
+
+		it('should return 401 if user is not logged in', async () => {
+			token = '';
+			const res = await request(app).post('/api/users');
+			expect(res.status).toBe(401);
+		});
+	});
 });
