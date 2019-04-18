@@ -125,11 +125,12 @@ describe('Users', () => {
 
 		afterEach(async () => {
 			await User.deleteMany();
+			await Role.deleteMany();
 		});
 
-		it('should return 400 if user already exists', async () => {
+		it('should return req.body validation fails', async () => {
 			const newUser = {
-				firstName: 'Kazeem',
+				firstName: 'Kafffff',
 				lastName: 'lanre',
 				userName: 'kazeem08',
 				email: 'kazeem08@gmail.com',
@@ -137,12 +138,85 @@ describe('Users', () => {
 				roleId: mongoose.Types.ObjectId()
 			};
 
-			await User.collection.insertMany([newUser]);
+			const res = await request(app)
+				.post('/api/users')
+				.send(newUser);
+			expect(res.status).toBe(400);
+		});
+
+		it('should return 400 if user already exists', async () => {
+			const newUser = new User({
+				firstName: 'Kazeem',
+				lastName: 'lanre',
+				userName: 'kazeem08',
+				email: 'kazeem08@gmail.com',
+				password: '123456',
+				role: {
+					_id: mongoose.Types.ObjectId(),
+					title: 'level2'
+				}
+			});
+
+			await newUser.save();
+
+			const role = new Role({
+				_id: mongoose.Types.ObjectId(),
+				title: 'leve1'
+			});
+
+			await role.save();
+
+			const user2 = {
+				firstName: 'Kazeem',
+				lastName: 'lanre',
+				userName: 'kazeem08',
+				email: 'kazeem08@gmail.com',
+				password: '123456',
+				roleId: role._id
+			};
+
+			const res = await request(app)
+				.post('/api/users')
+				.send(user2);
+			expect(res.status).toBe(400);
+		});
+
+		it('should return 400 if roleId is invalid', async () => {
+			const newUser = {
+				firstName: 'Kazeem',
+				lastName: 'lanre',
+				userName: 'fsfsffsf',
+				email: 'kdgdfdtd@gmail.com',
+				password: '123456',
+				roleId: mongoose.Types.ObjectId()
+			};
 
 			const res = await request(app)
 				.post('/api/users')
 				.send(newUser);
 			expect(res.status).toBe(400);
+		});
+
+		it('should create new user', async () => {
+			const role = new Role({
+				_id: mongoose.Types.ObjectId(),
+				title: 'leve1'
+			});
+
+			await role.save();
+			const newUser = {
+				firstName: 'Kazeem',
+				lastName: 'lanre',
+				userName: 'kazeem08',
+				email: 'kaz08@gmail.com',
+				password: '123456',
+				roleId: role._id
+			};
+
+			const res = await request(app)
+				.post('/api/users')
+				.send(newUser);
+			expect(res.status).toBe(200);
 		});
 	});
 });

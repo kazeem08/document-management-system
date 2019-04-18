@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import 'dotenv/config';
+import Joi from 'Joi';
+// import value from 'joi-objectid';
+// Joi.objectId = value(Joi);
+
 import { roles } from './routes/roles';
 import { users } from './routes/users';
 

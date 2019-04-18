@@ -69,7 +69,7 @@ function validateUser(user) {
 			.min(3)
 			.max(100)
 			.required(),
-		username: Joi.string()
+		userName: Joi.string()
 			.min(3)
 			.max(100)
 			.required(),
@@ -85,4 +85,4 @@ function validateUser(user) {
 	return Joi.validate(user, schema);
 }
 
-export { User, validateUser as validate };
+export { User, validateUser };
