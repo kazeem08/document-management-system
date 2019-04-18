@@ -17,7 +17,7 @@ router.get('/:id', validateObjectId, [auth, admin], async (req, res) => {
 	res.send(user);
 });
 
-router.post('/', auth, async (req, res) => {
+router.post('/', [auth, admin], async (req, res) => {
 	res.send();
 });
 

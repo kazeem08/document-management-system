@@ -146,5 +146,12 @@ describe('Users', () => {
 			const res = await request(app).post('/api/users');
 			expect(res.status).toBe(401);
 		});
+
+		it('should return 403 if user is not an admin', async () => {
+			const res = await request(app)
+				.post('/api/users')
+				.set('x-auth-token', token);
+			expect(res.status).toBe(403);
+		});
 	});
 });
