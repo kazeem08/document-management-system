@@ -17,10 +17,13 @@ const Role = mongoose.model('Role', roleSchema);
 //joi validation for role model
 function validateRole(role) {
 	const schema = {
-		title: Joi.string().required()
+		title: Joi.string()
+			.min(5)
+			.max(30)
+			.required()
 	};
 
-	return validate(role, schema);
+	return Joi.validate(role, schema);
 }
 
 export { Role, validateRole, roleSchema };
