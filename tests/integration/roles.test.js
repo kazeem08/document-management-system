@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import request from 'supertest';
-import mongoose from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
 import { Role } from '../../models/role';
 import { User } from '../../models/user';
 import { app } from '../../index';
@@ -20,7 +20,7 @@ describe('Roles', () => {
 		});
 
 		afterEach(async () => {
-			await Role.deleteMany({});
+			await Role.deleteMany();
 		});
 
 		it('should get all roles if user is logged in as an admin', async () => {
@@ -43,10 +43,10 @@ describe('Roles', () => {
 			expect(res.body.length).toBe(1);
 			expect(res.body.some(g => g.title === 'Admin')).toBeTruthy();
 		});
-  });
-  
-  describe('GET by ID', () => {
-    let token;
+	});
+
+	describe('GET by ID', () => {
+		let token;
 		const user = {
 			_id: mongoose.Types.ObjectId().toHexString(),
 			role: {
@@ -56,35 +56,38 @@ describe('Roles', () => {
 		};
 		beforeEach(() => {
 			token = new User(user).generateAuthToken();
-    });
+		});
 
-    afterEach(async () => {
-      await Role.deleteMany({})
-    })
-    
-    it('should return 404 if no category is found', async () => {
+		afterEach(async () => {
+			await Role.deleteMany({});
+		});
+
+		it('should return 400 if no role is found', async () => {
 			const id = mongoose.Types.ObjectId();
-			const res = await request(app).get('/api/categories/' + id);
+			const res = await request(app)
+				.get('/api/roles/' + id)
+				.set('x-auth-token', token);
 			expect(res.status).toBe(404);
-    });
-    
-    it('should return a category if a valid id is passed ', async () => {
+		});
+
+		it('should return a role if a valid id is passed ', async () => {
 			const role = new Role({
 				name: 'Regular'
 			});
 
 			await role.save();
-			const res = await request(app).get('/api/roles/' + role._id).set('x-auth-token', token);
+			const res = await request(app)
+				.get('/api/roles/' + role._id)
+				.set('x-auth-token', token);
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveProperty('name', role.name);
-    });
-    
-    // it('should return error if id is invalid', async () => {
-		// 	const res = await request(app).get('/api/roles/1');
-		// 	expect(res.status).toBe(404);
-		// });
-  
-  })
+		});
+
+		it('should return error if id is invalid', async () => {
+			const res = await request(app).get('/api/roles/1');
+			expect(res.status).toBe(404);
+		});
+	});
 
 	describe('POST ', () => {
 		let token;
@@ -122,7 +125,7 @@ describe('Roles', () => {
 			expect(res.status).toBe(403);
 		});
 
-		it('should return 400 if category is less than 5 characters', async () => {
+		it('should return 400 if role is less than 5 characters', async () => {
 			user.role.title = 'Admin';
 			token = new User(user).generateAuthToken();
 			title = 'fff';
@@ -131,7 +134,7 @@ describe('Roles', () => {
 			expect(res.status).toBe(400);
 		});
 
-		it('should return 400 if category is more than 30 characters', async () => {
+		it('should return 400 if role is more than 30 characters', async () => {
 			user.role.title = 'Admin';
 			token = new User(user).generateAuthToken();
 			title = new Array(35).join('k');
