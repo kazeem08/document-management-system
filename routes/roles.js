@@ -5,7 +5,8 @@ import { admin } from '../middleware/admin';
 const router = express.Router();
 
 router.post('/', auth, async (req, res) => {
-	// await res.status(401).send('Unauthorized');
+	if (req.user.role.title !== 'Admin')
+		return res.status(403).send('Access Denied');
 	res.send();
 });
 
