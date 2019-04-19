@@ -46,9 +46,26 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', validateObjectId, auth, async (req, res) => {
-	const user = await User.findById(req.params.id);
+	let user = await User.findById(req.params.id);
 	if (!user) return res.status(404).send('User does not exist');
-	res.send();
+
+	user = await User.findByIdAndUpdate(
+		req.params.id,
+		{
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			userName: req.body.userName,
+			email: req.body.email,
+			password: req.body.password,
+			role: {
+				_id: user.role._id,
+				title: user.role.title
+			}
+		},
+		{ new: true }
+	);
+
+	res.send(user);
 });
 
 export { router as users };

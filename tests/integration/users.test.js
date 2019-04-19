@@ -220,6 +220,11 @@ describe('Users', () => {
 	});
 
 	describe('PUT', () => {
+		// const role = new Role({
+		// 	_id: mongoose.Types.ObjectId(),
+		// 	title: 'Regular'
+		// });
+
 		let token;
 		const user = new User({
 			firstName: 'Kazeem',
@@ -228,7 +233,7 @@ describe('Users', () => {
 			email: 'kazeem08@gmail.com',
 			password: '123456',
 			role: {
-				_id: mongoose.Types.ObjectId().toHexString(),
+				_id: mongoose.Types.ObjectId(),
 				title: 'Regular'
 			}
 		});
@@ -239,6 +244,7 @@ describe('Users', () => {
 
 		afterEach(async () => {
 			await User.deleteMany();
+			await Role.deleteMany();
 		});
 		it('should return 401 if user is not logged in', async () => {
 			const id = mongoose.Types.ObjectId();
@@ -262,12 +268,18 @@ describe('Users', () => {
 			expect(res.status).toBe(404);
 		});
 
-		it('should update check if user id is valid', async () => {
+		it('should update if user id is valid', async () => {
 			await user.save();
+
 			const res = await request(app)
 				.put('/api/users/' + user._id)
-				.set('x-auth-token', token);
+				.set('x-auth-token', token)
+				.send({ firstName: 'Olanrewaju' });
+
+			const updatedUser = await User.findById(user._id);
+			console.log(updatedUser);
 			expect(res.status).toBe(200);
+			expect(updatedUser.firstName).toBe('Olanrewaju');
 		});
 	});
 });
