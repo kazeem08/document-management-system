@@ -92,6 +92,23 @@ describe('Documents', () => {
 			expect(res.status).toBe(404);
 		});
 
+		it('should return 404 if user is not on the same role when accessing documents that have acess as role', async () => {
+			const document = new Document({
+				title: 'document1',
+				user: user,
+				content: 'welcome to first document',
+				access: 'role'
+			});
+			await document.save();
+
+			token = new User(user).generateAuthToken();
+			const res = await request(app)
+				.get('/api/documents/role')
+				.set('x-auth-token', token);
+
+			expect(res.status).toBeDefined();
+		});
+
 		it('should return 4all files with filtered conditions', async () => {
 			const document = new Document({
 				title: 'document1',
@@ -107,6 +124,23 @@ describe('Documents', () => {
 				.set('x-auth-token', token);
 
 			expect(res.status).toBe(404);
+		});
+
+		it('should return 4all files with filtered conditions', async () => {
+			const document = new Document({
+				title: 'document1',
+				user: user,
+				content: 'welcome to first document',
+				access: 'role'
+			});
+			await document.save();
+
+			token = new User(user).generateAuthToken();
+			const res = await request(app)
+				.get('/api/documents')
+				.set('x-auth-token', token);
+
+			expect(res.body).toBeDefined();
 		});
 	});
 
