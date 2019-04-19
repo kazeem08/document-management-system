@@ -17,6 +17,17 @@ router.get('/private', auth, async (req, res) => {
 	res.send(document);
 });
 
+//route to get users particular to a role with access = role
+router.get('/role', auth, async (req, res) => {
+	const document = await Document.find({
+		access: 'role',
+		'user.role.title': req.user.role.title
+	});
+
+	if (document.length < 1) return res.status(404).send('no record found');
+
+	res.send(document);
+});
 //route for creating a document
 router.post('/', auth, async (req, res) => {
 	const user1 = await User.findById(req.body.userId);

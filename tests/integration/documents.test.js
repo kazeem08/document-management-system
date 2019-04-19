@@ -28,7 +28,7 @@ describe('Documents', () => {
 			password: '123456',
 			role: {
 				_id: mongoose.Types.ObjectId(),
-				title: 'Regular'
+				title: 'Admin'
 			}
 		});
 
@@ -73,6 +73,23 @@ describe('Documents', () => {
 
 			expect(res.body.some(g => g.access === 'private')).toBeTruthy();
 			// expect(res.status).toBe(404);
+		});
+
+		it('should return 404 if user is not on the same role when accessing documents that have acess as role', async () => {
+			const document = new Document({
+				title: 'document1',
+				user: user,
+				content: 'welcome to first document',
+				access: 'role'
+			});
+			await document.save();
+
+			token = new User(user2).generateAuthToken();
+			const res = await request(app)
+				.get('/api/documents/role')
+				.set('x-auth-token', token);
+
+			expect(res.status).toBe(404);
 		});
 	});
 
