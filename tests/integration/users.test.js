@@ -132,7 +132,6 @@ describe('Users', () => {
 			const newUser = {
 				firstName: 'Kafffff',
 				lastName: 'lanre',
-				userName: 'kazeem08',
 				email: 'kazeem08@gmail.com',
 				password: '123456',
 				roleId: mongoose.Types.ObjectId()
@@ -217,6 +216,120 @@ describe('Users', () => {
 				.post('/api/users')
 				.send(newUser);
 			expect(res.status).toBe(200);
+		});
+	});
+
+	describe('PUT', () => {
+		let token;
+		const user = new User({
+			firstName: 'Kazeem',
+			lastName: 'lanre',
+			userName: 'kazeem08',
+			email: 'kazeem08@gmail.com',
+			password: '123456',
+			role: {
+				_id: mongoose.Types.ObjectId(),
+				title: 'Regular'
+			}
+		});
+
+		beforeEach(() => {
+			token = new User(user).generateAuthToken();
+		});
+
+		afterEach(async () => {
+			await User.deleteMany();
+			await Role.deleteMany();
+		});
+		it('should return 401 if user is not logged in', async () => {
+			const id = mongoose.Types.ObjectId();
+			const res = await request(app).put('/api/users/' + id);
+			expect(res.status).toBe(401);
+		});
+
+		it('should return 404 if ID is invalid', async () => {
+			const id = 1;
+			const res = await request(app)
+				.put('/api/users/' + id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(404);
+		});
+
+		it('should return 404 if ID of user does not exist', async () => {
+			const id = mongoose.Types.ObjectId();
+			const res = await request(app)
+				.put('/api/users/' + id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(404);
+		});
+
+		it('should update if user id is valid', async () => {
+			await user.save();
+
+			const res = await request(app)
+				.put('/api/users/' + user._id)
+				.set('x-auth-token', token)
+				.send({ firstName: 'Olanrewaju' });
+
+			const updatedUser = await User.findById(user._id);
+			expect(res.status).toBe(200);
+			expect(updatedUser.firstName).toBe('Olanrewaju');
+		});
+	});
+
+	describe('DELETE', () => {
+		let token;
+		const user = new User({
+			firstName: 'Kazeem',
+			lastName: 'lanre',
+			userName: 'kazeem08',
+			email: 'kazeem08@gmail.com',
+			password: '123456',
+			role: {
+				_id: mongoose.Types.ObjectId(),
+				title: 'Regular'
+			}
+		});
+
+		beforeEach(() => {
+			token = new User(user).generateAuthToken();
+		});
+
+		afterEach(async () => {
+			await User.deleteMany();
+			await Role.deleteMany();
+		});
+
+		it('should return 401 if user is not logged in', async () => {
+			const id = mongoose.Types.ObjectId();
+			const res = await request(app).delete('/api/users/' + id);
+			expect(res.status).toBe(401);
+		});
+
+		it('should return 404 if ID is invalid', async () => {
+			const id = 1;
+			const res = await request(app)
+				.delete('/api/users/' + id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(404);
+		});
+
+		it('should return 404 if ID of user does not exist', async () => {
+			const id = mongoose.Types.ObjectId();
+			const res = await request(app)
+				.delete('/api/users/' + id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(404);
+		});
+
+		it('should delete user', async () => {
+			await user.save();
+
+			const res = await request(app)
+				.delete('/api/users/' + user._id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(200);
+			expect(res.body).toHaveProperty('_id');
 		});
 	});
 });
