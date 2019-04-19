@@ -7,17 +7,20 @@ import { Role } from '../models/role';
 
 const router = express.Router();
 
+//routet to get all users
 router.get('/', [auth, admin], async (req, res) => {
 	const users = await User.find();
 	res.send(users);
 });
 
+//route to get user by Id
 router.get('/:id', validateObjectId, [auth, admin], async (req, res) => {
 	const user = await User.findById(req.params.id);
 	if (!user) return res.status(404).send('No user exist with this ID');
 	res.send(user);
 });
 
+//route to create user
 router.post('/', async (req, res) => {
 	const { error } = validateUser(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
@@ -45,6 +48,7 @@ router.post('/', async (req, res) => {
 	res.send(user);
 });
 
+//route to update user
 router.put('/:id', validateObjectId, auth, async (req, res) => {
 	let user = await User.findById(req.params.id);
 	if (!user) return res.status(404).send('User does not exist');
