@@ -7,12 +7,14 @@ import Joi from 'Joi';
 
 import { roles } from './routes/roles';
 import { users } from './routes/users';
+import { login } from './routes/login';
 
 const app = express();
 
 app.use(express.json());
 app.use('/api/roles', roles);
 app.use('/api/users', users);
+app.use('/api/login', login);
 
 const port = process.env.PORT;
 let db = process.env.db;
