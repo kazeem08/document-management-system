@@ -35,14 +35,19 @@ router.get('/:page', auth, async (req, res) => {
 	let page = req.params.page || 1;
 	let skip = perPage * page - perPage;
 
-	const document = await Document.find()
-		.or([
-			{ access: 'public' },
-			{ 'user._id': req.user._id },
-			{ 'user.role.title': req.user.role.title }
-		])
-		.limit(perPage)
-		.skip(skip);
+	let document;
+	if (req.user.role.title === 'Admin') {
+		document = await Document.find();
+	} else {
+		document = await Document.find()
+			.or([
+				{ access: 'public' },
+				{ 'user._id': req.user._id },
+				{ 'user.role.title': req.user.role.title }
+			])
+			.limit(perPage)
+			.skip(skip);
+	}
 
 	if (document.length < 1) return res.status(404).send('no record found');
 
