@@ -20,6 +20,18 @@ describe('Documents', () => {
 			}
 		});
 
+		const user2 = new User({
+			firstName: 'Kazeem',
+			lastName: 'lanre',
+			userName: 'kazem08',
+			email: 'kazee8@gmail.com',
+			password: '123456',
+			role: {
+				_id: mongoose.Types.ObjectId(),
+				title: 'Regular'
+			}
+		});
+
 		beforeEach(() => {
 			token = new User(user).generateAuthToken();
 		});
@@ -28,7 +40,25 @@ describe('Documents', () => {
 			await Document.deleteMany();
 		});
 
-		it('should return 400 if user is not the creator of the document', async () => {
+		it('should return 404 if user is not the creator of the document', async () => {
+			const document = new Document({
+				title: 'document1',
+				user: user,
+				content: 'welcome to first document',
+				access: 'private'
+			});
+			await document.save();
+
+			token = new User(user2).generateAuthToken();
+
+			const res = await request(app)
+				.get('/api/documents/private')
+				.set('x-auth-token', token);
+
+			expect(res.status).toBe(404);
+		});
+
+		it('should return 404 if user is the creator of the document', async () => {
 			const document = new Document({
 				title: 'document1',
 				user: user,
@@ -42,6 +72,7 @@ describe('Documents', () => {
 				.set('x-auth-token', token);
 
 			expect(res.body.some(g => g.access === 'private')).toBeTruthy();
+			// expect(res.status).toBe(404);
 		});
 	});
 
@@ -62,7 +93,7 @@ describe('Documents', () => {
 			token = new User(user).generateAuthToken();
 		});
 		afterEach(async () => {
-			await User.deleteMany();
+			await User.deleteMany({});
 			await Document.deleteMany();
 		});
 
@@ -74,6 +105,22 @@ describe('Documents', () => {
 				.send({ content: 'hello world' });
 			expect(res.status).toBe(401);
 		});
+
+		it('should return 401 if user is not logged in', async () => {
+			const document = {
+				title: 'document1',
+				userId: mongoose.Types.ObjectId(),
+				content: 'welcome to first document'
+			};
+
+			const res = await request(app)
+				.post('/api/documents')
+				.send(document)
+				.set('x-auth-token', token);
+
+			expect(res.status).toBe(400);
+		});
+
 		it('should have a dateCreated property', async () => {
 			await user.save();
 

@@ -11,6 +11,8 @@ router.get('/private', auth, async (req, res) => {
 		access: 'private'
 	});
 
+	if (document.length < 1) return res.status(404).send('no record found');
+
 	res.send(document);
 });
 
