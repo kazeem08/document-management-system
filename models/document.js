@@ -28,7 +28,7 @@ const documentSchema = new mongoose.Schema({
 	},
 	access: {
 		type: String,
-		required: true
+		default: 'public'
 	},
 	content: {
 		type: String,
