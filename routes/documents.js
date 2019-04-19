@@ -6,12 +6,19 @@ import { auth } from '../middleware/auth';
 const router = express.Router();
 
 //route to get all documents
-router.get('/', auth, async (req, res) => {
-	const document = await Document.find().or([
-		{ access: 'public' },
-		{ 'user._id': req.user._id },
-		{ 'user.role.title': req.user.role.title }
-	]);
+router.get('/:page', auth, async (req, res) => {
+	let perPage = 9;
+	let page = req.params.page || 1;
+	let skip = perPage * page - perPage;
+
+	const document = await Document.find()
+		.or([
+			{ access: 'public' },
+			{ 'user._id': req.user._id },
+			{ 'user.role.title': req.user.role.title }
+		])
+		.limit(perPage)
+		.skip(skip);
 
 	if (document.length < 1) return res.status(404).send('no record found');
 
