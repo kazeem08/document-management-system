@@ -40,6 +40,49 @@ describe('Documents', () => {
 			await Document.deleteMany();
 		});
 
+		it('should return all files with filtered conditions', async () => {
+			const document = new Document({
+				title: 'document1',
+				user: user,
+				content: 'welcome to first document',
+				access: 'role'
+			});
+			await document.save();
+
+			token = new User(user).generateAuthToken();
+			const res = await request(app)
+				.get('/api/documents/1')
+				.set('x-auth-token', token);
+
+			expect(res.body).toBeDefined();
+		});
+
+		it('should return all files with filtered conditions', async () => {
+			const document = new Document({
+				title: 'document1',
+				user: user,
+				content: 'welcome to first document',
+				access: 'role'
+			});
+			await document.save();
+
+			token = new User(user).generateAuthToken();
+			const res = await request(app)
+				.get('/api/documents/page')
+				.set('x-auth-token', token);
+
+			expect(res.body).toBeDefined();
+		});
+
+		it('should return all files with filtered conditions', async () => {
+			token = new User(user).generateAuthToken();
+			const res = await request(app)
+				.get('/api/documents/page')
+				.set('x-auth-token', token);
+
+			expect(res.status).toBe(404);
+		});
+
 		it('should return 404 if user is not the creator of the document', async () => {
 			const document = new Document({
 				title: 'document1',
@@ -124,23 +167,6 @@ describe('Documents', () => {
 				.set('x-auth-token', token);
 
 			expect(res.status).toBe(404);
-		});
-
-		it('should return 4all files with filtered conditions', async () => {
-			const document = new Document({
-				title: 'document1',
-				user: user,
-				content: 'welcome to first document',
-				access: 'role'
-			});
-			await document.save();
-
-			token = new User(user).generateAuthToken();
-			const res = await request(app)
-				.get('/api/documents')
-				.set('x-auth-token', token);
-
-			expect(res.body).toBeDefined();
 		});
 	});
 

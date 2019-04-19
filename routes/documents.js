@@ -5,26 +5,6 @@ import { auth } from '../middleware/auth';
 
 const router = express.Router();
 
-//route to get all documents
-router.get('/:page', auth, async (req, res) => {
-	let perPage = 10;
-	let page = req.params.page || 1;
-	let skip = perPage * page - perPage;
-
-	const document = await Document.find()
-		.or([
-			{ access: 'public' },
-			{ 'user._id': req.user._id },
-			{ 'user.role.title': req.user.role.title }
-		])
-		.limit(perPage)
-		.skip(skip);
-
-	if (document.length < 1) return res.status(404).send('no record found');
-
-	res.send(document);
-});
-
 //route for getting document with private access
 router.get('/private', auth, async (req, res) => {
 	const document = await Document.find({
@@ -48,6 +28,27 @@ router.get('/role', auth, async (req, res) => {
 
 	res.send(document);
 });
+
+// route to get all documents
+router.get('/:page', auth, async (req, res) => {
+	let perPage = 10;
+	let page = req.params.page || 1;
+	let skip = perPage * page - perPage;
+
+	const document = await Document.find()
+		.or([
+			{ access: 'public' },
+			{ 'user._id': req.user._id },
+			{ 'user.role.title': req.user.role.title }
+		])
+		.limit(perPage)
+		.skip(skip);
+
+	if (document.length < 1) return res.status(404).send('no record found');
+
+	res.send(document);
+});
+
 //route for creating a document
 router.post('/', auth, async (req, res) => {
 	const user1 = await User.findById(req.body.userId);
