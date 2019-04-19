@@ -7,7 +7,7 @@ const router = express.Router();
 
 //route to get all documents
 router.get('/:page', auth, async (req, res) => {
-	let perPage = 9;
+	let perPage = 10;
 	let page = req.params.page || 1;
 	let skip = perPage * page - perPage;
 
