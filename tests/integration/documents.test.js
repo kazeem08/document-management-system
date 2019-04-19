@@ -40,6 +40,23 @@ describe('Documents', () => {
 			await Document.deleteMany();
 		});
 
+		it('should return all files if user is an admin', async () => {
+			const document = new Document({
+				title: 'document1',
+				user: user2,
+				content: 'welcome to first document',
+				access: 'role'
+			});
+			await document.save();
+
+			token = new User(user2).generateAuthToken();
+			const res = await request(app)
+				.get('/api/documents/1')
+				.set('x-auth-token', token);
+
+			expect(res.body).toBeDefined();
+		});
+
 		it('should return all files with filtered conditions', async () => {
 			const document = new Document({
 				title: 'document1',
