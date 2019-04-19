@@ -72,4 +72,9 @@ router.put('/:id', validateObjectId, auth, async (req, res) => {
 	res.send(user);
 });
 
+//route to delete
+router.delete('/:id', validateObjectId, auth, (req, res) => {
+	res.send();
+});
+
 export { router as users };
