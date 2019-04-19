@@ -321,5 +321,15 @@ describe('Users', () => {
 				.set('x-auth-token', token);
 			expect(res.status).toBe(404);
 		});
+
+		it('should delete user', async () => {
+			await user.save();
+
+			const res = await request(app)
+				.delete('/api/users/' + user._id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(200);
+			expect(res.body).toHaveProperty('_id');
+		});
 	});
 });

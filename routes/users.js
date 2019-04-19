@@ -74,9 +74,10 @@ router.put('/:id', validateObjectId, auth, async (req, res) => {
 
 //route to delete
 router.delete('/:id', validateObjectId, auth, async (req, res) => {
-	const user = await User.findById(req.params.id);
+	let user = await User.findByIdAndDelete(req.params.id);
 	if (!user) return res.status(404).send('User does not exist');
-	res.send();
+
+	res.send(user);
 });
 
 export { router as users };
