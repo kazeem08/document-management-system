@@ -5,6 +5,7 @@ import { auth } from '../middleware/auth';
 
 const router = express.Router();
 
+//route for getting document with private access
 router.get('/private', auth, async (req, res) => {
 	const document = await Document.find({
 		'user._id': req.user._id,
@@ -16,6 +17,7 @@ router.get('/private', auth, async (req, res) => {
 	res.send(document);
 });
 
+//route for creating a document
 router.post('/', auth, async (req, res) => {
 	const user1 = await User.findById(req.body.userId);
 	if (!user1) return res.status(400).send('Invalid user');
