@@ -70,5 +70,6 @@ describe('Login', () => {
 			.send({ email: 'kazeem08@gmail.com', password: '123456' });
 
 		expect(res.status).toBe(200);
+		expect(res.body).toBeDefined();
 	});
 });

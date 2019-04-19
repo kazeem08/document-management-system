@@ -15,8 +15,8 @@ router.post('/', async (req, res) => {
 
 	if (user.password !== req.body.password)
 		return res.status(400).send('Invalid email/password');
-
-	res.send();
+	const token = user.generateAuthToken();
+	res.send(token);
 });
 
 //joi validation for login
