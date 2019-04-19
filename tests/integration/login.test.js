@@ -37,18 +37,6 @@ describe('Login', () => {
 	});
 
 	it('shoud return 400 if user does not exist', async () => {
-		// await user.save();
-		// await User.collection.insertOne({
-		// 	firstName: 'Kazeem',
-		// 	lastName: 'lanre',
-		// 	userName: 'kazeem08',
-		// 	email: 'kazeem08@gmail.com',
-		// 	password: '123456',
-		// 	role: {
-		// 		_id: mongoose.Types.ObjectId(),
-		// 		title: 'Regular'
-		// 	}
-		// });
 		const res = await request(app)
 			.post('/api/login')
 			.send({ email: 'kahhdhd@yahoo.com', password: '0909090909' });
@@ -57,17 +45,6 @@ describe('Login', () => {
 	});
 
 	it('shoud return 400 if password does not match', async () => {
-		// await User.collection.insertOne({
-		// 	firstName: 'Kazeem',
-		// 	lastName: 'lanre',
-		// 	userName: 'kazeem08',
-		// 	email: 'kazeem08@gmail.com',
-		// 	password: '123456',
-		// 	role: {
-		// 		_id: mongoose.Types.ObjectId(),
-		// 		title: 'Regular'
-		// 	}
-		// });
 		await user.save();
 		const res = await request(app)
 			.post('/api/login')
@@ -77,7 +54,6 @@ describe('Login', () => {
 	});
 
 	it('should login if inputs are valid', async () => {
-		// await user.save();
 		await User.collection.insertOne({
 			firstName: 'Kazeem',
 			lastName: 'lanre',

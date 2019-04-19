@@ -19,6 +19,7 @@ router.post('/', async (req, res) => {
 	res.send();
 });
 
+//joi validation for login
 function validate(req) {
 	const schema = {
 		email: Joi.string()
