@@ -18,7 +18,7 @@ const documentSchema = new mongoose.Schema({
 	title: {
 		type: String,
 		required: true,
-		// unique: true,
+		unique: true,
 		minlength: 5,
 		max: 200
 	},
@@ -48,4 +48,4 @@ const documentSchema = new mongoose.Schema({
 
 const Document = mongoose.model('Document', documentSchema);
 
-export { Document };
+export { Document, userSchema };
