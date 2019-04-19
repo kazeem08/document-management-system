@@ -1,4 +1,5 @@
 import express from 'express';
+import Joi from 'joi';
 import { auth } from '../middleware/auth';
 import { User } from '../models/user';
 
@@ -6,6 +7,9 @@ const router = express.Router();
 
 //route to log in
 router.post('/', async (req, res) => {
+	const { error } = validate(req.body);
+	if (error) return res.status(400).send(error.details[0].message);
+
 	const email = await User.findOne({ email: req.body.email });
 	if (!email) return res.status(400).send('Invalid email/password');
 

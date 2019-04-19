@@ -8,7 +8,15 @@ describe('Login', () => {
 	afterEach(async () => {
 		await User.deleteMany();
 	});
+
 	it('shoud if email and password are provided', async () => {
+		const res = await request(app)
+			.post('/api/login')
+			.send({ email: 'kah', password: '553' });
+
+		expect(res.status).toBe(400);
+	});
+	it('shoud if email and password exist', async () => {
 		const user = new User({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
