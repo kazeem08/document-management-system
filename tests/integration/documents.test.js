@@ -91,6 +91,23 @@ describe('Documents', () => {
 
 			expect(res.status).toBe(404);
 		});
+
+		it('should return 4all files with filtered conditions', async () => {
+			const document = new Document({
+				title: 'document1',
+				user: user,
+				content: 'welcome to first document',
+				access: 'role'
+			});
+			await document.save();
+
+			token = new User(user2).generateAuthToken();
+			const res = await request(app)
+				.get('/api/documents')
+				.set('x-auth-token', token);
+
+			expect(res.status).toBe(404);
+		});
 	});
 
 	describe('POST', () => {
