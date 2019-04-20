@@ -382,6 +382,16 @@ describe('Documents', () => {
 					.set('x-auth-token', token);
 				expect(res.status).toBe(404);
 			});
+
+			it('should delete document', async () => {
+				await document.save();
+
+				const res = await request(app)
+					.delete('/api/documents/' + document._id)
+					.set('x-auth-token', token);
+				expect(res.status).toBe(200);
+				expect(res.body).toHaveProperty('_id');
+			});
 		});
 	});
 });
