@@ -314,7 +314,7 @@ describe('Users', () => {
 			expect(res.status).toBe(404);
 		});
 
-		it('should return 404 if ID of user does not exist', async () => {
+		it('should return 404 if user does not exist', async () => {
 			const id = mongoose.Types.ObjectId();
 			const res = await request(app)
 				.delete('/api/users/' + id)
