@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { roleSchema } from '../models/role';
 
+//creating custom user schema
 const userSchema = new mongoose.Schema({
 	firstName: {
 		type: String,
@@ -14,6 +15,7 @@ const userSchema = new mongoose.Schema({
 	}
 });
 
+//creating document schema
 const documentSchema = new mongoose.Schema({
 	title: {
 		type: String,
@@ -28,7 +30,9 @@ const documentSchema = new mongoose.Schema({
 	},
 	access: {
 		type: String,
-		default: 'public'
+		default: 'public',
+		minlength: 5,
+		maxlength: 20
 	},
 	content: {
 		type: String,
@@ -46,6 +50,32 @@ const documentSchema = new mongoose.Schema({
 	}
 });
 
+//creating document model
 const Document = mongoose.model('Document', documentSchema);
 
-export { Document, userSchema };
+//Joi validation for document schema
+function validateDocument(document) {
+	const schema = {
+		title: Joi.string()
+			.min(5)
+			.max(200)
+			.required(),
+		userId: Joi.string()
+			.min(3)
+			.max(100)
+			.required(),
+		access: Joi.string()
+			.min(5)
+			.max(20)
+			.required(),
+		content: Joi.string()
+			.min(10)
+			.max(1000)
+			.required()
+			.email()
+	};
+
+	return Joi.validate(document, schema);
+}
+
+export { Document, documentSchema, validateDocument };
