@@ -265,4 +265,41 @@ describe('Documents', () => {
 			expect(res.body).toHaveProperty('access', 'public');
 		});
 	});
+
+	describe('PUT', () => {
+		let token;
+
+		const user = new User({
+			firstName: 'Kazeem',
+			lastName: 'lanre',
+			userName: 'kazeem08',
+			email: 'kazeem08@gmail.com',
+			password: '123456',
+			role: {
+				_id: mongoose.Types.ObjectId(),
+				title: 'Regular'
+			}
+		});
+
+		const document = new Document({
+			title: 'document1',
+			user: user,
+			content: 'welcome to first document',
+			access: 'private'
+		});
+
+		beforeEach(() => {
+			token = new User(user).generateAuthToken();
+		});
+		afterEach(async () => {
+			await User.deleteMany();
+			await Document.deleteMany();
+		});
+
+		it('should return 401 if user is not logged in', async () => {
+			const id = mongoose.Types.ObjectId();
+			const res = await request(app).put('/api/documents/' + id);
+			expect(res.status).toBe(401);
+		});
+	});
 });

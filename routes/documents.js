@@ -81,4 +81,7 @@ router.post('/', auth, async (req, res) => {
 	res.send(document);
 });
 
+router.put('/:id', auth, (req, res) => {
+	res.send();
+});
 export { router as documents };
