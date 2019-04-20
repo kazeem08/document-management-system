@@ -317,5 +317,18 @@ describe('Documents', () => {
 				.set('x-auth-token', token);
 			expect(res.status).toBe(404);
 		});
+
+		it('should update if user id is valid', async () => {
+			await document.save();
+
+			const res = await request(app)
+				.put('/api/documents/' + document._id)
+				.set('x-auth-token', token)
+				.send({ title: 'document2' });
+
+			const updatedUser = await Document.findById(document._id);
+			expect(res.status).toBe(200);
+			expect(updatedUser.title).toBe('document2');
+		});
 	});
 });
