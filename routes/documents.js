@@ -2,6 +2,7 @@ import express from 'express';
 import { Document } from '../models/document';
 import { User } from '../models/user';
 import { auth } from '../middleware/auth';
+import { validateDocument } from '../models/document';
 
 const router = express.Router();
 
@@ -57,8 +58,12 @@ router.get('/:page', auth, async (req, res) => {
 
 //route for creating a document
 router.post('/', auth, async (req, res) => {
+	const { error } = validateDocument(req.body);
+	if (error) return res.status(400).send(error.details[0].message);
+
 	const user1 = await User.findById(req.body.userId);
 	if (!user1) return res.status(400).send('Invalid user');
+
 	const document = new Document({
 		title: req.body.title,
 		user: {

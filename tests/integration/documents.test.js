@@ -118,7 +118,7 @@ describe('Documents', () => {
 			expect(res.status).toBe(404);
 		});
 
-		it('should return 404 if user is the creator of the document', async () => {
+		it('should return record if user is  the creator of the document', async () => {
 			const document = new Document({
 				title: 'document1',
 				user: user,
@@ -152,7 +152,7 @@ describe('Documents', () => {
 			expect(res.status).toBe(404);
 		});
 
-		it('should return 404 if user is not on the same role when accessing documents that have acess as role', async () => {
+		it('should return the record', async () => {
 			const document = new Document({
 				title: 'document1',
 				user: user,
@@ -169,7 +169,7 @@ describe('Documents', () => {
 			expect(res.status).toBeDefined();
 		});
 
-		it('should return 4all files with filtered conditions', async () => {
+		it('should return all files with filtered conditions', async () => {
 			const document = new Document({
 				title: 'document1',
 				user: user,
@@ -217,7 +217,22 @@ describe('Documents', () => {
 			expect(res.status).toBe(401);
 		});
 
-		it('should return 401 if user is not logged in', async () => {
+		it('should return 400 if input validation fails', async () => {
+			const document = {
+				title: 'g1',
+				userId: mongoose.Types.ObjectId(),
+				content: 'wt'
+			};
+
+			const res = await request(app)
+				.post('/api/documents')
+				.send(document)
+				.set('x-auth-token', token);
+
+			expect(res.status).toBe(400);
+		});
+
+		it('should return 400 if user does not exist', async () => {
 			const document = {
 				title: 'document1',
 				userId: mongoose.Types.ObjectId(),
