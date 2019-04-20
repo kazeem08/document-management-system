@@ -309,5 +309,13 @@ describe('Documents', () => {
 				.set('x-auth-token', token);
 			expect(res.status).toBe(404);
 		});
+
+		it('should return 404 if ID of user does not exist', async () => {
+			const id = mongoose.Types.ObjectId();
+			const res = await request(app)
+				.put('/api/documents/' + id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(404);
+		});
 	});
 });

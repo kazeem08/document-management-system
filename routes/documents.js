@@ -82,7 +82,9 @@ router.post('/', auth, async (req, res) => {
 	res.send(document);
 });
 
-router.put('/:id', validateObjectId, auth, (req, res) => {
+router.put('/:id', validateObjectId, auth, async (req, res) => {
+	let document = await Document.findById(req.params.id);
+	if (!document) return res.status(404).send('document does not exist');
 	res.send();
 });
 export { router as documents };
