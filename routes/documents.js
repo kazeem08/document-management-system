@@ -46,7 +46,8 @@ router.get('/:page', auth, async (req, res) => {
 				{ 'user.role.title': req.user.role.title }
 			])
 			.limit(perPage)
-			.skip(skip);
+			.skip(skip)
+			.sort('-dateCreated');
 	}
 
 	if (document.length < 1) return res.status(404).send('no record found');
