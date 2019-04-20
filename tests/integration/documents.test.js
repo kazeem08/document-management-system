@@ -301,5 +301,13 @@ describe('Documents', () => {
 			const res = await request(app).put('/api/documents/' + id);
 			expect(res.status).toBe(401);
 		});
+
+		it('should return 404 if ID is invalid', async () => {
+			const id = 1;
+			const res = await request(app)
+				.put('/api/documents/' + id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(404);
+		});
 	});
 });

@@ -3,6 +3,7 @@ import { Document } from '../models/document';
 import { User } from '../models/user';
 import { auth } from '../middleware/auth';
 import { validateDocument } from '../models/document';
+import { validateObjectId } from '../middleware/validateObjectId';
 
 const router = express.Router();
 
@@ -81,7 +82,7 @@ router.post('/', auth, async (req, res) => {
 	res.send(document);
 });
 
-router.put('/:id', auth, (req, res) => {
+router.put('/:id', validateObjectId, auth, (req, res) => {
 	res.send();
 });
 export { router as documents };
