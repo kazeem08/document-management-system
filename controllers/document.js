@@ -2,6 +2,7 @@ import { Document, validateDocument } from '../models/document';
 import { User } from '../models/user';
 
 class DocumentController {
+	//method to get private access documents
 	async getPrivateDocs(req, res) {
 		const document = await Document.find({
 			'user._id': req.user._id,
@@ -13,6 +14,7 @@ class DocumentController {
 		res.send(document);
 	}
 
+	//method to get role access documents
 	async getRoleDocs(req, res) {
 		const document = await Document.find({
 			access: 'role',
@@ -24,6 +26,7 @@ class DocumentController {
 		res.send(document);
 	}
 
+	//method to get all documents
 	async getAllDocs(req, res) {
 		let perPage = Number(req.query.perPage) || 10;
 		let page = req.query.page || 1;
@@ -51,6 +54,7 @@ class DocumentController {
 		res.send(document);
 	}
 
+	//method to create documents
 	async createDocs(req, res) {
 		const { error } = validateDocument(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
@@ -75,6 +79,7 @@ class DocumentController {
 		res.send(document);
 	}
 
+	//method to update documents
 	async updateDocs(req, res) {
 		let document = await Document.findById(req.params.id);
 		if (!document) return res.status(404).send('document does not exist');
@@ -92,6 +97,16 @@ class DocumentController {
 			},
 			{ new: true }
 		);
+		res.send(document);
+	}
+
+	//method for deleting document
+	async deleteDocs(req, res) {
+		let document = await Document.findById(req.params.id);
+		if (!document) return res.status(404).send('document does not exist');
+
+		document = await Document.findByIdAndDelete(req.params.id);
+
 		res.send(document);
 	}
 }

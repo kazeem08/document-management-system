@@ -1,6 +1,4 @@
 import express from 'express';
-import { Document } from '../models/document';
-import { User } from '../models/user';
 import { auth } from '../middleware/auth';
 import { validateObjectId } from '../middleware/validateObjectId';
 import { documentController } from '../controllers/document';
@@ -21,13 +19,6 @@ router.post('/', auth, documentController.createDocs);
 //route to update documents
 router.put('/:id', validateObjectId, auth, documentController.updateDocs);
 
-router.delete('/:id', validateObjectId, auth, async (req, res) => {
-	let document = await Document.findById(req.params.id);
-	if (!document) return res.status(404).send('document does not exist');
-
-	document = await Document.findByIdAndDelete(req.params.id);
-
-	res.send(document);
-});
+router.delete('/:id', validateObjectId, auth, documentController.deleteDocs);
 
 export { router as documents };
