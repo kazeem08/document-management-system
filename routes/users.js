@@ -21,11 +21,6 @@ router.post('/', userController.createUser);
 router.put('/:id', validateObjectId, auth, userController.updateUser);
 
 //route to delete
-router.delete('/:id', validateObjectId, auth, async (req, res) => {
-	let user = await User.findByIdAndDelete(req.params.id);
-	if (!user) return res.status(404).send('User does not exist');
-
-	res.send(user);
-});
+router.delete('/:id', validateObjectId, auth, userController.deleteUser);
 
 export { router as users };

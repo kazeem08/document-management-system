@@ -64,6 +64,12 @@ class UserController {
     res.send(user);
   }
   
+  async deleteUser (req, res)  {
+    let user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).send('User does not exist');
+  
+    res.send(user);
+  }
 }
 
 const userController = new UserController();
