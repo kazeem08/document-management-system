@@ -19,25 +19,7 @@ router.get('/', auth, documentController.getAllDocs);
 router.post('/', auth, documentController.createDocs);
 
 //route to update documents
-router.put('/:id', validateObjectId, auth, async (req, res) => {
-	let document = await Document.findById(req.params.id);
-	if (!document) return res.status(404).send('document does not exist');
-
-	document = await Document.findByIdAndUpdate(
-		req.params.id,
-		{
-			title: req.body.title,
-			user: {
-				_id: document.user._id,
-				title: document.user.title
-			},
-			content: req.body.content,
-			access: req.body.access
-		},
-		{ new: true }
-	);
-	res.send(document);
-});
+router.put('/:id', validateObjectId, auth, documentController.updateDocs);
 
 router.delete('/:id', validateObjectId, auth, async (req, res) => {
 	let document = await Document.findById(req.params.id);
