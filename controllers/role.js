@@ -49,6 +49,10 @@ class RoleController {
 
 		res.send(role);
 	}
+
+	async deleteRole(req, res) {
+		res.send();
+	}
 }
 
 const roleController = new RoleController();

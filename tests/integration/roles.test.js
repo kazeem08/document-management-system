@@ -251,4 +251,47 @@ describe('Roles', () => {
 			expect(updatedRole.title).toBe('role2');
 		});
 	});
+
+	describe('DELETE', () => {
+		let token;
+		let title;
+		let id;
+		const exec = async () => {
+			return await request(app)
+				.delete('/api/roles/' + id)
+				.set('x-auth-token', token)
+				.send({ title });
+		};
+		const user = {
+			_id: mongoose.Types.ObjectId(),
+			role: {
+				_id: mongoose.Types.ObjectId(),
+				title: 'Admin'
+			}
+		};
+		beforeEach(() => {
+			token = new User(user).generateAuthToken();
+			id = mongoose.Types.ObjectId();
+			title = 'Regular';
+		});
+
+		afterEach(async () => {
+			await Role.deleteMany({});
+			await User.deleteMany();
+		});
+
+		it('should return 401 if user is not logged in', async () => {
+			token = '';
+
+			const res = await exec();
+			expect(res.status).toBe(401);
+		});
+
+		it('should return 403 if user is not an admin', async () => {
+			user.role.title = 'staff';
+			token = new User(user).generateAuthToken();
+			const res = await exec();
+			expect(res.status).toBe(403);
+		});
+	});
 });

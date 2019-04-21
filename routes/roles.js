@@ -16,4 +16,6 @@ router.post('/', [auth, admin], roleController.createRole);
 
 router.put('/:id', [validateObjectId, auth, admin], roleController.updateRole);
 
+router.delete('/:id', [auth, admin], roleController.deleteRole);
+
 export { router as roles };
