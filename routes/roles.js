@@ -10,23 +10,10 @@ const router = express.Router();
 router.get('/', [auth, admin], roleController.getRoles);
 
 //route to get role by id
-router.get('/:id', validateObjectId, [auth, admin], roleController.getById);
+router.get('/:id', [validateObjectId, auth, admin], roleController.getById);
 
 //route to create a role
-router.post('/', [auth, admin], async (req, res) => {
-	const { error } = validateRole(req.body);
-	if (error) return res.status(400).send(error.details[0].message);
-
-	let role = await Role.findOne({ title: req.body.title });
-	if (role) return res.status(400).send('Role already exist');
-
-	role = new Role({
-		title: req.body.title
-	});
-
-	await role.save();
-	res.send(role);
-});
+router.post('/', [auth, admin], roleController.createRole);
 
 router.put('/', validateObjectId, async (req, res) => {
 	// const { error } = validateRole(req.body);
