@@ -32,14 +32,16 @@ router.get('/role', auth, async (req, res) => {
 });
 
 // route to get all documents
-router.get('/:page', auth, async (req, res) => {
-	let perPage = 10;
-	let page = req.params.page || 1;
+router.get('/', auth, async (req, res) => {
+	let perPage = Number(req.query.perPage) || 10;
+	let page = req.query.page || 1;
 	let skip = perPage * page - perPage;
-
 	let document;
 	if (req.user.role.title === 'Admin') {
-		document = await Document.find();
+		document = await Document.find()
+			.limit(perPage)
+			.skip(skip)
+			.sort('-dateCreated');
 	} else {
 		document = await Document.find()
 			.or([
