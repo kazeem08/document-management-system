@@ -4,20 +4,11 @@ import { User } from '../models/user';
 import { auth } from '../middleware/auth';
 import { validateDocument } from '../models/document';
 import { validateObjectId } from '../middleware/validateObjectId';
-
+import { documentController } from '../controllers/document';
 const router = express.Router();
 
 //route for getting document with private access
-router.get('/private', auth, async (req, res) => {
-	const document = await Document.find({
-		'user._id': req.user._id,
-		access: 'private'
-	});
-
-	if (document.length < 1) return res.status(404).send('no record found');
-
-	res.send(document);
-});
+router.get('/private', auth, documentController.getPrivateDocs);
 
 //route to get users particular to a role with access = role
 router.get('/role', auth, async (req, res) => {
