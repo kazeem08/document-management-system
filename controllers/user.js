@@ -1,19 +1,21 @@
 import { User, validateUser } from '../models/user';
 import { Role } from '../models/role';
 
+//method for creating user
 class UserController {
-	constructor() {}
 	async getAllUsers(req, res) {
 		const users = await User.find();
 		res.send(users);
 	}
 
+  //method for getting user by Id
 	async getById(req, res) {
 		const user = await User.findById(req.params.id);
 		if (!user) return res.status(404).send('No user exist with this ID');
 		res.send(user);
 	}
 
+  //method for creating user
 	async createUser(req, res) {
 		const { error } = validateUser(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
@@ -41,6 +43,7 @@ class UserController {
 		res.send(user);
   }
   
+  //method for updating user
   async updateUser (req, res) {
     let user = await User.findById(req.params.id);
     if (!user) return res.status(404).send('User does not exist');
@@ -64,6 +67,7 @@ class UserController {
     res.send(user);
   }
   
+  //method for deleting user
   async deleteUser (req, res)  {
     let user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).send('User does not exist');
@@ -73,12 +77,5 @@ class UserController {
 }
 
 const userController = new UserController();
-
-// const UserConttroller = {};
-
-// UserConttroller.get = async (req, res) => {
-// 	const users = await User.find();
-// 	res.send(users);
-// };
 
 export { userController };
