@@ -15,6 +15,6 @@ router.get('/:id', [validateObjectId, auth, admin], roleController.getById);
 //route to create a role
 router.post('/', [auth, admin], roleController.createRole);
 
-router.put('/:id', [validateObjectId, auth], roleController.updateRole);
+router.put('/:id', [validateObjectId, auth, admin], roleController.updateRole);
 
 export { router as roles };
