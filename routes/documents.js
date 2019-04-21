@@ -11,16 +11,7 @@ const router = express.Router();
 router.get('/private', auth, documentController.getPrivateDocs);
 
 //route to get users particular to a role with access = role
-router.get('/role', auth, async (req, res) => {
-	const document = await Document.find({
-		access: 'role',
-		'user.role.title': req.user.role.title
-	});
-
-	if (document.length < 1) return res.status(404).send('no record found');
-
-	res.send(document);
-});
+router.get('/role', auth, documentController.getRoleDocs);
 
 // route to get all documents
 router.get('/', auth, async (req, res) => {
