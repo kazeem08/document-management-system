@@ -2,7 +2,6 @@ import express from 'express';
 import { Document } from '../models/document';
 import { User } from '../models/user';
 import { auth } from '../middleware/auth';
-import { validateDocument } from '../models/document';
 import { validateObjectId } from '../middleware/validateObjectId';
 import { documentController } from '../controllers/document';
 const router = express.Router();
@@ -17,29 +16,7 @@ router.get('/role', auth, documentController.getRoleDocs);
 router.get('/', auth, documentController.getAllDocs);
 
 //route for creating a document
-router.post('/', auth, async (req, res) => {
-	const { error } = validateDocument(req.body);
-	if (error) return res.status(400).send(error.details[0].message);
-
-	const user1 = await User.findById(req.body.userId);
-	if (!user1) return res.status(400).send('Invalid user');
-
-	const document = new Document({
-		title: req.body.title,
-		user: {
-			_id: user1._id,
-			firstName: user1.firstName,
-			role: {
-				_id: user1.role._id,
-				title: user1.role.title
-			}
-		},
-		access: req.body.access,
-		content: req.body.content
-	});
-	await document.save();
-	res.send(document);
-});
+router.post('/', auth, documentController.createDocs);
 
 //route to update documents
 router.put('/:id', validateObjectId, auth, async (req, res) => {

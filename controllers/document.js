@@ -1,4 +1,5 @@
-import { Document } from '../models/document';
+import { Document, validateDocument } from '../models/document';
+import { User } from '../models/user';
 
 class DocumentController {
 	async getPrivateDocs(req, res) {
@@ -47,6 +48,30 @@ class DocumentController {
 
 		if (document.length < 1) return res.status(404).send('no record found');
 
+		res.send(document);
+	}
+
+	async createDocs(req, res) {
+		const { error } = validateDocument(req.body);
+		if (error) return res.status(400).send(error.details[0].message);
+
+		const user1 = await User.findById(req.body.userId);
+		if (!user1) return res.status(400).send('Invalid user');
+
+		const document = new Document({
+			title: req.body.title,
+			user: {
+				_id: user1._id,
+				firstName: user1.firstName,
+				role: {
+					_id: user1.role._id,
+					title: user1.role.title
+				}
+			},
+			access: req.body.access,
+			content: req.body.content
+		});
+		await document.save();
 		res.send(document);
 	}
 }
