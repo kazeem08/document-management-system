@@ -169,4 +169,20 @@ describe('Roles', () => {
 			expect(res.body).toHaveProperty('title', 'Regular');
 		});
 	});
+
+	describe('PUT', () => {
+		// it('should return 404 if ID is invalid', async () => {
+		// 	const id = 1;
+		// 	const res = await request(app)
+		// 		.put('/api/roles/' + id)
+		// 		.set('x-auth-token', token);
+		// 	expect(res.status).toBe(404);
+		// });
+
+		it('should return 401 if user is not logged in', async () => {
+			const id = 1;
+			const res = await request(app).put('/api/roles/' + id);
+			expect(res.status).toBe(401);
+		});
+	});
 });

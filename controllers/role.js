@@ -30,6 +30,22 @@ class RoleController {
 		await role.save();
 		res.send(role);
 	}
+
+	//method to update role
+	async updateRole(req, res) {
+		const { error } = validateRole(req.body);
+		// if (error) return res.status(400).send(error.details[0].message);
+
+		// let role = await Role.findOne({ title: req.body.title });
+		// if (role) return res.status(400).send('Role already exist');
+
+		// role = new Role({
+		// 	title: req.body.title
+		// });
+
+		// await role.save();
+		res.send();
+	}
 }
 
 const roleController = new RoleController();
