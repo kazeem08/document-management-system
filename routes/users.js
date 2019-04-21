@@ -3,15 +3,13 @@ import { User, validateUser } from '../models/user';
 import { auth } from '../middleware/auth';
 import { admin } from '../middleware/admin';
 import { validateObjectId } from '../middleware/validateObjectId';
+import { userController } from '../controllers/user';
 import { Role } from '../models/role';
 
 const router = express.Router();
 
 //routet to get all users
-router.get('/', [auth, admin], async (req, res) => {
-	const users = await User.find();
-	res.send(users);
-});
+router.get('/', [auth, admin], userController.getAllUsers);
 
 //route to get user by Id
 router.get('/:id', validateObjectId, [auth, admin], async (req, res) => {
