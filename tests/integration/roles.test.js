@@ -293,5 +293,32 @@ describe('Roles', () => {
 			const res = await exec();
 			expect(res.status).toBe(403);
 		});
+
+		it('should return 404 if ID is invalid', async () => {
+			id = 1;
+			const res = await exec();
+			expect(res.status).toBe(404);
+		});
+
+		it('should return 404 if role does not exist', async () => {
+			user.role.title = 'Admin';
+			token = new User(user).generateAuthToken();
+			const res = await exec();
+
+			expect(res.status).toBe(404);
+		});
+
+		it('should delete role if found', async () => {
+			const role = new Role({
+				title: 'role1'
+			});
+			await role.save();
+			user.role.title = 'Admin';
+			token = new User(user).generateAuthToken();
+			id = role._id;
+			const res = await exec();
+			expect(res.status).toBe(200);
+			expect(res.body).toHaveProperty('_id');
+		});
 	});
 });
