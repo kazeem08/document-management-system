@@ -234,5 +234,21 @@ describe('Roles', () => {
 
 			expect(res.status).toBe(404);
 		});
+
+		it('should update role if found', async () => {
+			const role = new Role({
+				title: 'role1'
+			});
+			await role.save();
+			user.role.title = 'Admin';
+			token = new User(user).generateAuthToken();
+			const res = await request(app)
+				.put('/api/roles/' + role._id)
+				.set('x-auth-token', token)
+				.send({ title: 'role2' });
+			const updatedRole = await Role.findById(role._id);
+
+			expect(updatedRole.title).toBe('role2');
+		});
 	});
 });

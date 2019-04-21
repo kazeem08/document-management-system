@@ -36,15 +36,18 @@ class RoleController {
 		const { error } = validateRole(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
 
-		let role = await Role.findOne({ title: req.body.title });
+		let role = await Role.findById(req.params.id);
 		if (!role) return res.status(404).send('Role does not exist');
 
-		// role = new Role({
-		// 	title: req.body.title
-		// });
+		role = await Role.findByIdAndUpdate(
+			req.params.id,
+			{
+				title: req.body.title
+			},
+			{ new: true }
+		);
 
-		// await role.save();
-		res.send();
+		res.send(role);
 	}
 }
 
