@@ -24,12 +24,6 @@ describe('Roles', () => {
 		});
 
 		it('should get all roles if user is logged in as an admin', async () => {
-			// const roles = [{ title: 'Admin' }, { title: 'Regular' }];
-			// await Role.collection.insertMany([
-			// 	{ title: 'Admin' },
-			// 	{ title: 'Regular' }
-			// ]);
-			// token = '';
 			const role = new Role({
 				title: 'Admin'
 			});
@@ -230,6 +224,15 @@ describe('Roles', () => {
 			const res = await exec();
 
 			expect(res.status).toBe(400);
+		});
+
+		it('should return 404 if role does not exist', async () => {
+			user.role.title = 'Admin';
+			title = 'hfjfyk';
+			token = new User(user).generateAuthToken();
+			const res = await exec();
+
+			expect(res.status).toBe(404);
 		});
 	});
 });
