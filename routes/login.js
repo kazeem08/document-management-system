@@ -1,23 +1,11 @@
 import express from 'express';
 import Joi from 'joi';
-import { auth } from '../middleware/auth';
-import { User } from '../models/user';
+import { LoginController, loginController } from '../controllers/login';
 
 const router = express.Router();
 
 //route to log in
-router.post('/', async (req, res) => {
-	const { error } = validate(req.body);
-	if (error) return res.status(400).send(error.details[0].message);
-
-	const user = await User.findOne({ email: req.body.email });
-	if (!user) return res.status(400).send('Invalid email or password');
-
-	if (user.password !== req.body.password)
-		return res.status(400).send('Invalid email/password');
-	const token = user.generateAuthToken();
-	res.send(token);
-});
+router.post('/', loginController.login);
 
 //joi validation for login
 function validate(req) {
@@ -35,4 +23,4 @@ function validate(req) {
 	return Joi.validate(req, schema);
 }
 
-export { router as login };
+export { router as login, validate };
