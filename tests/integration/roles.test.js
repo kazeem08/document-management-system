@@ -171,18 +171,34 @@ describe('Roles', () => {
 	});
 
 	describe('PUT', () => {
-		// it('should return 404 if ID is invalid', async () => {
-		// 	const id = 1;
-		// 	const res = await request(app)
-		// 		.put('/api/roles/' + id)
-		// 		.set('x-auth-token', token);
-		// 	expect(res.status).toBe(404);
-		// });
+		let token;
+		const user = {
+			_id: mongoose.Types.ObjectId().toHexString(),
+			role: {
+				_id: mongoose.Types.ObjectId().toHexString(),
+				title: 'Admin'
+			}
+		};
+		beforeEach(() => {
+			token = new User(user).generateAuthToken();
+		});
+
+		afterEach(async () => {
+			await Role.deleteMany({});
+		});
 
 		it('should return 401 if user is not logged in', async () => {
-			const id = 1;
+			const id = mongoose.Types.ObjectId();
 			const res = await request(app).put('/api/roles/' + id);
 			expect(res.status).toBe(401);
+		});
+
+		it('should return 404 if ID is invalid', async () => {
+			const id = 1;
+			const res = await request(app)
+				.put('/api/roles/' + id)
+				.set('x-auth-token', token);
+			expect(res.status).toBe(404);
 		});
 	});
 });
