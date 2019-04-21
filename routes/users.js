@@ -12,11 +12,7 @@ const router = express.Router();
 router.get('/', [auth, admin], userController.getAllUsers);
 
 //route to get user by Id
-router.get('/:id', validateObjectId, [auth, admin], async (req, res) => {
-	const user = await User.findById(req.params.id);
-	if (!user) return res.status(404).send('No user exist with this ID');
-	res.send(user);
-});
+router.get('/:id', validateObjectId, [auth, admin], userController.getById);
 
 //route to create user
 router.post('/', async (req, res) => {
