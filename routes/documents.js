@@ -2,6 +2,8 @@ import express from 'express';
 import { Document } from '../models/document';
 import { User } from '../models/user';
 import { auth } from '../middleware/auth';
+import { validateDocument } from '../models/document';
+import { validateObjectId } from '../middleware/validateObjectId';
 
 const router = express.Router();
 
@@ -30,14 +32,16 @@ router.get('/role', auth, async (req, res) => {
 });
 
 // route to get all documents
-router.get('/:page', auth, async (req, res) => {
-	let perPage = 10;
-	let page = req.params.page || 1;
+router.get('/', auth, async (req, res) => {
+	let perPage = Number(req.query.perPage) || 10;
+	let page = req.query.page || 1;
 	let skip = perPage * page - perPage;
-
 	let document;
 	if (req.user.role.title === 'Admin') {
-		document = await Document.find();
+		document = await Document.find()
+			.limit(perPage)
+			.skip(skip)
+			.sort('-dateCreated');
 	} else {
 		document = await Document.find()
 			.or([
@@ -57,8 +61,12 @@ router.get('/:page', auth, async (req, res) => {
 
 //route for creating a document
 router.post('/', auth, async (req, res) => {
+	const { error } = validateDocument(req.body);
+	if (error) return res.status(400).send(error.details[0].message);
+
 	const user1 = await User.findById(req.body.userId);
 	if (!user1) return res.status(400).send('Invalid user');
+
 	const document = new Document({
 		title: req.body.title,
 		user: {
@@ -73,6 +81,36 @@ router.post('/', auth, async (req, res) => {
 		content: req.body.content
 	});
 	await document.save();
+	res.send(document);
+});
+
+//route to update documents
+router.put('/:id', validateObjectId, auth, async (req, res) => {
+	let document = await Document.findById(req.params.id);
+	if (!document) return res.status(404).send('document does not exist');
+
+	document = await Document.findByIdAndUpdate(
+		req.params.id,
+		{
+			title: req.body.title,
+			user: {
+				_id: document.user._id,
+				title: document.user.title
+			},
+			content: req.body.content,
+			access: req.body.access
+		},
+		{ new: true }
+	);
+	res.send(document);
+});
+
+router.delete('/:id', validateObjectId, auth, async (req, res) => {
+	let document = await Document.findById(req.params.id);
+	if (!document) return res.status(404).send('document does not exist');
+
+	document = await Document.findByIdAndDelete(req.params.id);
+
 	res.send(document);
 });
 
