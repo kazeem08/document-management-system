@@ -2,6 +2,7 @@ import { User } from '../models/user';
 import { validate } from '../routes/login';
 
 class LoginController {
+	//method for loggin in
 	async login(req, res) {
 		const { error } = validate(req.body);
 		if (error) return res.status(400).send(error.details[0].message);

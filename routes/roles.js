@@ -14,8 +14,10 @@ router.get('/:id', [validateObjectId, auth, admin], roleController.getById);
 //route to create a role
 router.post('/', [auth, admin], roleController.createRole);
 
+//route to update a role
 router.put('/:id', [validateObjectId, auth, admin], roleController.updateRole);
 
+//route to delete a role
 router.delete(
 	'/:id',
 	[validateObjectId, auth, admin],

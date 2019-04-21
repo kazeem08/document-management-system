@@ -18,10 +18,11 @@ app.use('/api/users', users);
 app.use('/api/login', login);
 app.use('/api/documents', documents);
 
-const port = process.env.PORT;
-let db = process.env.db;
+const port = process.env.PORT; //getting the port
+let db = process.env.db; //getting the db
 if (process.env.NODE_ENV === 'test') db = process.env.db_test;
 
+//connecting to database
 mongoose
 	.connect(db, { useNewUrlParser: true, useCreateIndex: true })
 	.then(() => console.log(`connected to ${db}`));

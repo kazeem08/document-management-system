@@ -50,6 +50,7 @@ class RoleController {
 		res.send(role);
 	}
 
+	//method to delete role
 	async deleteRole(req, res) {
 		let role = await Role.findById(req.params.id);
 		if (!role) return res.status(404).send('Role does not exist');
