@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import request from 'supertest';
+import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { app } from '../../index';
 import { User } from '../../models/user';
@@ -16,6 +17,7 @@ describe('Login', () => {
 			title: 'Regular'
 		}
 	});
+
 	afterEach(async () => {
 		await User.deleteMany();
 	});
@@ -54,17 +56,21 @@ describe('Login', () => {
 	});
 
 	it('should login if inputs are valid', async () => {
+		const salt = await bcrypt.genSalt(10);
+		const password = await bcrypt.hash('123456', salt);
+
 		await User.collection.insertOne({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
 			userName: 'kazeem08',
 			email: 'kazeem08@gmail.com',
-			password: '123456',
+			password: password,
 			role: {
 				_id: mongoose.Types.ObjectId(),
 				title: 'Regular'
 			}
 		});
+
 		const res = await request(app)
 			.post('/api/login')
 			.send({ email: 'kazeem08@gmail.com', password: '123456' });

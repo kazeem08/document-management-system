@@ -61,7 +61,7 @@ function validateDocument(document) {
 			.min(5)
 			.max(200)
 			.required(),
-		userId: Joi.string()
+		userId: Joi.objectId()
 			.min(3)
 			.max(100)
 			.required(),
