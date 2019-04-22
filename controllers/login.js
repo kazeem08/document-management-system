@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { User } from '../models/user';
 import { validate } from '../routes/login';
 
@@ -10,8 +11,9 @@ class LoginController {
 		const user = await User.findOne({ email: req.body.email });
 		if (!user) return res.status(400).send('Invalid email or password');
 
-		if (user.password !== req.body.password)
-			return res.status(400).send('Invalid email/password');
+		const password = await bcrypt.compare(req.body.password, user.password);
+		if (!password) return res.status(400).send('Invalid email/password');
+
 		const token = user.generateAuthToken();
 		res.send(token);
 	}
