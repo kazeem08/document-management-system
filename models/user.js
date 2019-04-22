@@ -79,7 +79,7 @@ function validateUser(user) {
 			.required()
 			.email(),
 		password: Joi.string().min(6),
-		roleId: Joi.string().required()
+		roleId: Joi.objectId().required()
 	};
 
 	return Joi.validate(user, schema);

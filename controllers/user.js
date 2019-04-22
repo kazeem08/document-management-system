@@ -1,3 +1,5 @@
+import _ from 'lodash';
+import bcrypt from 'bcrypt';
 import { User, validateUser } from '../models/user';
 import { Role } from '../models/role';
 
@@ -8,14 +10,14 @@ class UserController {
 		res.send(users);
 	}
 
-  //method for getting user by Id
+	//method for getting user by Id
 	async getById(req, res) {
 		const user = await User.findById(req.params.id);
 		if (!user) return res.status(404).send('No user exist with this ID');
 		res.send(user);
 	}
 
-  //method for creating user
+	//method for creating user
 	async createUser(req, res) {
 		const { error } = validateUser(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
@@ -38,42 +40,48 @@ class UserController {
 			}
 		});
 
+		const salt = await bcrypt.genSalt(10);
+		user.password = await bcrypt.hash(user.password, salt);
+
 		await user.save();
 
+		// res.send(user);
+		res.send(
+			_.pick(user, ['_id', 'firstName', 'lastName', 'userName', 'email'])
+		);
+	}
+
+	//method for updating user
+	async updateUser(req, res) {
+		let user = await User.findById(req.params.id);
+		if (!user) return res.status(404).send('User does not exist');
+
+		user = await User.findByIdAndUpdate(
+			req.params.id,
+			{
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
+				userName: req.body.userName,
+				email: req.body.email,
+				password: req.body.password,
+				role: {
+					_id: user.role._id,
+					title: user.role.title
+				}
+			},
+			{ new: true }
+		);
+
 		res.send(user);
-  }
-  
-  //method for updating user
-  async updateUser (req, res) {
-    let user = await User.findById(req.params.id);
-    if (!user) return res.status(404).send('User does not exist');
-  
-    user = await User.findByIdAndUpdate(
-      req.params.id,
-      {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        userName: req.body.userName,
-        email: req.body.email,
-        password: req.body.password,
-        role: {
-          _id: user.role._id,
-          title: user.role.title
-        }
-      },
-      { new: true }
-    );
-  
-    res.send(user);
-  }
-  
-  //method for deleting user
-  async deleteUser (req, res)  {
-    let user = await User.findByIdAndDelete(req.params.id);
-    if (!user) return res.status(404).send('User does not exist');
-  
-    res.send(user);
-  }
+	}
+
+	//method for deleting user
+	async deleteUser(req, res) {
+		let user = await User.findByIdAndDelete(req.params.id);
+		if (!user) return res.status(404).send('User does not exist');
+
+		res.send(user);
+	}
 }
 
 const userController = new UserController();
