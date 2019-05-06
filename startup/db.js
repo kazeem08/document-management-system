@@ -8,11 +8,13 @@ if (process.env.NODE_ENV === 'test') db = process.env.db_test;
 const uri =
 	'mongodb+srv://dbUser:realmadrid_8899@document-management-bxuig.mongodb.net/test?retryWrites=true';
 
-mongoose
-	.connect(uri, { useNewUrlParser: true })
-	.then(() => console.log('connected to mongo db...'))
-	.catch(err => console.log(err));
-
-// mongoose
-// 	.connect(db, { useNewUrlParser: true, useCreateIndex: true })
-// 	.then(() => winston.info(`connected to ${db}`));
+if (process.env.NODE_ENV === 'local') {
+	mongoose
+		.connect(db, { useNewUrlParser: true, useCreateIndex: true })
+		.then(() => winston.info(`connected to ${db}`));
+} else if (process.env.NODE_ENV === 'development') {
+	mongoose
+		.connect(uri, { useNewUrlParser: true })
+		.then(() => console.log('connected to mongo db...'))
+		.catch(err => console.log(err));
+}

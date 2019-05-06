@@ -17,6 +17,8 @@ jwtKey();
 import { routes } from './startup/routes';
 routes(app);
 
+import './seeder';
+
 const port = process.env.PORT; //getting the port
 
 if (process.env.NODE_ENV !== 'test') {
