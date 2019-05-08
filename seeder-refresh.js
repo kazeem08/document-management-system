@@ -15,9 +15,10 @@ app.listen(port, () => console.log(`listening on port ${port}...`));
 
 class Seeder {
 	async seedUsers() {
+		await User.deleteMany();
+
 		let role = await Role.findOne({ title: 'Admin' });
 		let role2 = await Role.findOne({ title: 'Regular' });
-
 		for (let i = 0; i < 20; i++) {
 			let user = {};
 			if (i > 2) {
@@ -37,6 +38,7 @@ class Seeder {
 	}
 
 	async seedDocuments() {
+		await Document.deleteMany();
 		let access = ['private', 'public', 'role'];
 
 		for (let i = 0; i < 10; i++) {
@@ -65,5 +67,5 @@ async function seeding() {
 	await seed.seedUsers();
 	await seed.seedDocuments();
 }
-// seed.seedDocuments();
+
 seeding();

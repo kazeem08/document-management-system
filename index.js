@@ -17,12 +17,10 @@ jwtKey();
 import { routes } from './startup/routes';
 routes(app);
 
-import './seeder';
-
 const port = process.env.PORT; //getting the port
 
 if (process.env.NODE_ENV !== 'test') {
-	app.listen(port, () => console.log(`listening on port ${port}...`));
+	app.listen(port, () => winston.info(`listening on port ${port}...`));
 }
 
 export { app };

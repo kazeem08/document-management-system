@@ -2,13 +2,20 @@ import mongoose from 'mongoose';
 import winston from 'winston';
 
 let db = process.env.db; //getting the db
-if (process.env.NODE_ENV === 'test') db = process.env.db_test;
+if (process.env.NODE_ENV === 'test') {
+	db = process.env.db_test;
+	mongoose
+		.connect(db, { useNewUrlParser: true, useCreateIndex: true })
+		.then(() => winston.info(`connected to ${db}`));
+}
 
-//connecting to database
-const uri =
-	'mongodb+srv://dbUser:realmadrid_8899@document-management-bxuig.mongodb.net/test?retryWrites=true';
+const username = process.env.username;
+const password = process.env.password;
 
-if (process.env.NODE_ENV === 'local') {
+// //connecting to database
+const uri = `mongodb+srv://${username}:${password}@document-management-bxuig.mongodb.net/test?retryWrites=true`;
+
+if (process.env.NODE_ENV === 'staging') {
 	mongoose
 		.connect(db, { useNewUrlParser: true, useCreateIndex: true })
 		.then(() => winston.info(`connected to ${db}`));
