@@ -5,7 +5,7 @@ import Joi from 'joi';
 const roleSchema = new mongoose.Schema({
 	title: {
 		type: String,
-		unique: true,
+		//unique: true,
 		minlength: 5,
 		maxlength: 30
 	}
@@ -13,6 +13,10 @@ const roleSchema = new mongoose.Schema({
 
 //creating Role model
 const Role = mongoose.model('Role', roleSchema);
+
+Role.insertMany([{ title: 'Admin' }, { title: 'Regular' }])
+	.then(() => {})
+	.catch(err => {});
 
 //joi validation for role model
 function validateRole(role) {
