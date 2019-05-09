@@ -42,22 +42,88 @@ path:
         400:
           description: Bad Request
           schema:
-            type: object
-            properties:
-              status:
-                type: number
-                example: 400
-              message:
-                type: string
-                example: error message
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
         404:
           description: Not found
           schema:
+            ref: '#/definitions/error'
+  /api/roles/{id}:
+    put:
+      tags:
+        - Role
+      description: create a Role
+      parameters:
+        - name: payload
+          in: body
+          schema:
             type: object
             properties:
-              status:
-                type: number
-                example: 404
-              message:
+              title:
                 type: string
-                example: error message
+                example: Regular
+        - name: id
+          in: path
+          schema:
+            type: string
+            example: 5cd1e8812e3dad0a22afac1f
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: Regular
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+  /api/roles/{roleId}:
+    delete:
+      tags:
+        - Role
+      description: Delete a Role
+      parameters:
+        - name: roleId
+          in: path
+          schema:
+            type: string
+            example: 5cd1e8812e3dad0a22afac1j
+      responses:
+        200:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: Regular
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+
+definitions:
+  error:
+    type: string
+    example: error message
