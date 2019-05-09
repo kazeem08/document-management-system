@@ -4,9 +4,11 @@ import './startup/validation';
 // import 'express-async-errors';
 import 'dotenv/config';
 import winston from 'winston';
+import morgan from 'morgan';
 
 const app = express();
 app.use(express.json());
+app.use(morgan('tiny'));
 
 import { errorHandling } from './startup/logging';
 errorHandling();

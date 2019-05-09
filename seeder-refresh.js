@@ -4,6 +4,7 @@ import { Role } from './models/role';
 import { Document } from './models/document';
 import faker from 'faker';
 import bcrypt from 'bcrypt';
+// import { seed } from './seeder';
 
 const app = express();
 
@@ -11,12 +12,21 @@ const port = process.env.PORT; //getting the port
 
 import './startup/db';
 
-app.listen(port, () => console.log(`listening on port ${port}...`));
+// app.listen(port, () => console.log(`listening on port ${port}...`));
+
+// async function seedRefresh() {
+// 	await User.deleteMany({});
+// 	await Document.deleteMany({});
+
+// 	// await seed.seedUsers();
+// 	// await seed.seedDocuments();
+// }
+
+// seedRefresh();
 
 class Seeder {
 	async seedUsers() {
 		await User.deleteMany();
-
 		let role = await Role.findOne({ title: 'Admin' });
 		let role2 = await Role.findOne({ title: 'Regular' });
 		for (let i = 0; i < 20; i++) {
@@ -36,11 +46,9 @@ class Seeder {
 			//await user1.save();
 		}
 	}
-
 	async seedDocuments() {
 		await Document.deleteMany();
 		let access = ['private', 'public', 'role'];
-
 		for (let i = 0; i < 10; i++) {
 			const users = await User.find();
 			let document = {};
@@ -56,7 +64,6 @@ class Seeder {
 			};
 			document.access = access[Math.floor(Math.random() * access.length)];
 			document.content = faker.lorem.sentence();
-
 			await Document.create(document);
 		}
 	}
