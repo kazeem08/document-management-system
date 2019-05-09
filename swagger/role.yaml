@@ -50,3 +50,14 @@ path:
               message:
                 type: string
                 example: error message
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: number
+                example: 404
+              message:
+                type: string
+                example: error message
