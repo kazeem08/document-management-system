@@ -1,0 +1,17 @@
+path:
+  /api/roles:
+    get:
+      tags:
+        - Role
+      description: get all documents
+      response:
+        200:
+          description: Successful
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Admin
