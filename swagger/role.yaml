@@ -4,8 +4,32 @@ path:
       tags:
         - Role
       description: get all documents
-      response:
+      responses:
         200:
+          description: Successful
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Admin
+    post:
+      tags:
+        - Role
+      description: create a Role
+      parameters:
+        - name: payload
+          in: body
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: Admin
+      responses:
+        201:
           description: Successful
           schema:
             type: array
