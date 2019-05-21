@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Joi from 'joi';
+import Joi from '@hapi/joi';
 
 //creating roleSchema
 const roleSchema = new mongoose.Schema({

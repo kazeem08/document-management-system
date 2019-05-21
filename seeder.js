@@ -61,9 +61,11 @@ class Seeder {
 }
 
 const seed = new Seeder();
-async function seeding() {
+const seeding = async function() {
 	await seed.seedUsers();
 	await seed.seedDocuments();
-}
+};
 // seed.seedDocuments();
 seeding();
+
+export { seed };

@@ -1,5 +1,5 @@
 import express from 'express';
-import Joi from 'joi';
+import Joi from '@hapi/joi';
 import { LoginController, loginController } from '../controllers/login';
 
 const router = express.Router();
