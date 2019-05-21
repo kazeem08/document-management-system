@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { roleSchema } from './role';
 import dotenv from 'dotenv';
-import Joi from 'joi';
+import Joi from '@hapi/joi';
 dotenv.config();
 
 //creating user schema
