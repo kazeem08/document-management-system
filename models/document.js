@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { roleSchema } from '../models/role';
-import Joi from 'joi';
+import Joi from '@hapi/joi';
 
 //creating custom user schema
 const userSchema = new mongoose.Schema({
