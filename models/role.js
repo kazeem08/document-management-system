@@ -5,18 +5,22 @@ import Joi from '@hapi/joi';
 const roleSchema = new mongoose.Schema({
 	title: {
 		type: String,
-		//unique: true,
+		unique: true,
 		minlength: 5,
-		maxlength: 30
+		maxlength: 30,
+		default: 'Regular'
 	}
 });
 
 //creating Role model
 const Role = mongoose.model('Role', roleSchema);
 
-Role.insertMany([{ title: 'Admin' }, { title: 'Regular' }])
-	.then(() => {})
-	.catch(err => {});
+const roles = Role.find();
+if (roles.length < 1) {
+	Role.insertMany([{ title: 'Admin' }, { title: 'Regular' }])
+		.then(() => {})
+		.catch(err => {});
+}
 
 //joi validation for role model
 function validateRole(role) {

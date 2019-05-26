@@ -17,39 +17,34 @@ const userSchema = new mongoose.Schema({
 });
 
 //creating document schema
-const documentSchema = new mongoose.Schema({
-	title: {
-		type: String,
-		required: true,
-		unique: true,
-		minlength: 5,
-		max: 200
+const documentSchema = new mongoose.Schema(
+	{
+		title: {
+			type: String,
+			required: true,
+			unique: true,
+			minlength: 5,
+			max: 200
+		},
+		user: {
+			type: userSchema,
+			required: true
+		},
+		access: {
+			type: String,
+			default: 'public',
+			minlength: 3,
+			maxlength: 20
+		},
+		content: {
+			type: String,
+			required: true,
+			minlength: 10,
+			maxlength: 1000
+		}
 	},
-	user: {
-		type: userSchema,
-		required: true
-	},
-	access: {
-		type: String,
-		default: 'public',
-		minlength: 3,
-		maxlength: 20
-	},
-	content: {
-		type: String,
-		required: true,
-		minlength: 10,
-		maxlength: 1000
-	},
-	dateCreated: {
-		type: Date,
-		default: Date.now
-	},
-	dateModified: {
-		type: Date,
-		default: Date.now
-	}
-});
+	{ timestamps: true }
+);
 
 //creating document model
 const Document = mongoose.model('Document', documentSchema);
@@ -60,10 +55,6 @@ function validateDocument(document) {
 		title: Joi.string()
 			.min(5)
 			.max(200)
-			.required(),
-		userId: Joi.objectId()
-			.min(3)
-			.max(100)
 			.required(),
 		access: Joi.string()
 			.min(5)

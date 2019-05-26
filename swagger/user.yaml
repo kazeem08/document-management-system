@@ -1,0 +1,345 @@
+path:
+  /api/users:
+    get:
+      tags:
+        - User
+      description: get all users
+      parameters:
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  example: Kazeem
+                lastName:
+                  type: string
+                  example: lanre
+                userName:
+                  type: string
+                  example: kazeem08
+                email:
+                  type: string
+                  example: kazeem0825@gmail.com
+                password:
+                  type: string
+                  example: pro123
+                role:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 5ce29a0eebdb0d1e12087735
+                    title:
+                      type: string
+                      example: Regular
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+    post:
+      tags:
+        - User
+      description: create a User
+      parameters:
+        - name: payload
+          in: body
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+                example: Kazeem
+              lastName:
+                type: string
+                example: lanre
+              userName:
+                type: string
+                example: kazeem08
+              email:
+                type: string
+                example: kazeem0825@gmail.com
+              password:
+                type: string
+                example: pro123
+              role:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 5ce29a0eebdb0d1e12087735
+                  title:
+                    type: string
+                    example: Regular
+      responses:
+        201:
+          description: Successful
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+                example: Olanrewaju
+              lastName:
+                type: string
+                example: kazeem
+              userName:
+                type: string
+                example: kazeem08
+              email:
+                type: string
+                example: kazeem0825@gmail.com
+              role:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 5ce29a0eebdb0d1e12087735
+                  title:
+                    type: string
+                    example: Regular
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+
+  /api/users/me:
+    get:
+      tags:
+        - User
+      description: Get user by Id
+      parameters:
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+                example: Kazeem
+              lastName:
+                type: string
+                example: lanre
+              userName:
+                type: string
+                example: kazeem08
+              email:
+                type: string
+                example: kazeem0825@gmail.com
+              role:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 5ce29a0eebdb0d1e12087735
+                  title:
+                    type: string
+                    example: Regular
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+    put:
+      tags:
+        - User
+      description: Update a user
+      parameters:
+        - name: payload
+          in: body
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+                example: Olanrewaju
+              lastName:
+                type: string
+                example: kazeem
+              userName:
+                type: string
+                example: kazeem08
+              email:
+                type: string
+                example: kazeem0825@gmail.com
+              role:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 5ce29a0eebdb0d1e12087735
+                  title:
+                    type: string
+                    example: Regular
+        - in: header
+          name: x-auth-token
+          description: Token is required to Update
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+                example: Olanrewaju
+              lastName:
+                type: string
+                example: kazeem
+              userName:
+                type: string
+                example: kazeem08
+              email:
+                type: string
+                example: kazeem0825@gmail.com
+              role:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 5ce29a0eebdb0d1e12087735
+                  title:
+                    type: string
+                    example: Regular
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+    delete:
+      tags:
+        - User
+      description: delete a user
+      parameters:
+        - in: header
+          name: x-auth-token
+          description: Token is required to delete
+          schema:
+            type: string
+      responses:
+        200:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+                example: Olanrewaju
+              lastName:
+                type: string
+                example: kazeem
+              userName:
+                type: string
+                example: kazeem08
+              email:
+                type: string
+                example: kazeem0825@gmail.com
+              password:
+                type: string
+                example: pro124
+              role:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 5ce29a0eebdb0d1e12087735
+                  title:
+                    type: string
+                    example: Regular
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+  /api/login:
+    post:
+      tags:
+        - User
+      description: Login a user
+      parameters:
+        - name: payload
+          in: body
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                example: kazeem0825@gmail.com
+              password:
+                type: string
+                example: lofdgg
+      responses:
+        200:
+          schema:
+            type: string
+            properties:
+              token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Y2U5MzY0ZDg0NzE4N2NhZjUwMmVhZmEiLCJyb2xlIjp7Il9pZCI6IjVjZDFlODgxMmUzZGFkMGEyMmFmYWMxYyIsInRpdGxlIjoiUmVndWxhciJ9LCJpYXQiOjE1NTg3ODc3NTF9.W3vXJI9NNIwrZA42lAH9KJaz_oWypCWjL-wHwNc-Iyo
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+definitions:
+  error:
+    type: string
+    example: error message

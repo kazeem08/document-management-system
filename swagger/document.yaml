@@ -1,0 +1,478 @@
+path:
+  /api/documents:
+    get:
+      tags:
+        - Document
+      description: Get all Documents
+      parameters:
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: First Document
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 5ce29a0eebdb0d1e12087735
+                    firstName:
+                      type: string
+                      example: kazeem
+                    role:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5ce29a0eebdb0d1e12087735
+                        title:
+                          type: string
+                          example: Regular
+                access:
+                  type: string
+                  example: public
+                content:
+                  type: string
+                  example: Welcome to my document
+                createdAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+                updatedAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+    post:
+      tags:
+        - Document
+      description: Create a document
+      parameters:
+        - name: payload
+          in: body
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: First Document
+              user:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 5ce29a0eebdb0d1e12087735
+                  firstName:
+                    type: string
+                    example: kazeem
+                  role:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 5ce29a0eebdb0d1e12087735
+                      title:
+                        type: string
+                        example: Regular
+              access:
+                type: string
+                example: public
+              content:
+                type: string
+                example: Welcome to my document
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
+      responses:
+        201:
+          description: Successful
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: First Document
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 5ce29a0eebdb0d1e12087735
+                    firstName:
+                      type: string
+                      example: kazeem
+                    role:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5ce29a0eebdb0d1e12087735
+                        title:
+                          type: string
+                          example: Regular
+                access:
+                  type: string
+                  example: public
+                content:
+                  type: string
+                  example: Welcome to my document
+                createdAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+                updatedAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+  /api/documents/{role}:
+    get:
+      tags:
+        - Document
+      description: get all document by role
+      parameters:
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: First Document
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 5ce29a0eebdb0d1e12087735
+                    firstName:
+                      type: string
+                      example: kazeem
+                    role:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5ce29a0eebdb0d1e12087735
+                        title:
+                          type: string
+                          example: Regular
+                access:
+                  type: string
+                  example: role
+                content:
+                  type: string
+                  example: Welcome to my document
+                createdAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+                updatedAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+  /api/documents/{private}:
+    get:
+      tags:
+        - Document
+      description: get private documents
+      parameters:
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: First Document
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 5ce29a0eebdb0d1e12087735
+                    firstName:
+                      type: string
+                      example: kazeem
+                    role:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5ce29a0eebdb0d1e12087735
+                        title:
+                          type: string
+                          example: Regular
+                access:
+                  type: string
+                  example: private
+                content:
+                  type: string
+                  example: Welcome to my document
+                createdAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+                updatedAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+  /api/documents/{documentId}:
+    put:
+      tags:
+        - Document
+      description: Update document
+      parameters:
+        - name: payload
+          in: body
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: First Document
+              user:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 5ce29a0eebdb0d1e12087735
+                  firstName:
+                    type: string
+                    example: kazeem
+                  role:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 5ce29a0eebdb0d1e12087735
+                      title:
+                        type: string
+                        example: Regular
+              access:
+                type: string
+                example: role
+              content:
+                type: string
+                example: Welcome to my document
+        - name: documentId
+          in: path
+          schema:
+            type: string
+            example: role
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: First Document
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 5ce29a0eebdb0d1e12087735
+                    firstName:
+                      type: string
+                      example: kazeem
+                    role:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5ce29a0eebdb0d1e12087735
+                        title:
+                          type: string
+                          example: Regular
+                access:
+                  type: string
+                  example: public
+                content:
+                  type: string
+                  example: Welcome to my document
+                createdAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+                updatedAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+    delete:
+      tags:
+        - Document
+      description: delete a document
+      parameters:
+        - name: documentId
+          in: path
+          schema:
+            type: string
+            example: 5cd1e8812e3dad0a22afac1j
+        - name: documentId
+          in: path
+          schema:
+            type: string
+            example: 5cd1e8812e3dad0a22afac1f
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: First Document
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 5ce29a0eebdb0d1e12087735
+                    firstName:
+                      type: string
+                      example: kazeem
+                    role:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5ce29a0eebdb0d1e12087735
+                        title:
+                          type: string
+                          example: Regular
+                access:
+                  type: string
+                  example: public
+                content:
+                  type: string
+                  example: Welcome to my document
+                createdAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+                updatedAt:
+                  type: string
+                  format: string-date
+                  example: 2019-05-25T10:49:10.464+00:00
+        400:
+          description: Bad Request
+          schema:
+            ref: '#/definitions/error'
+        401:
+          description: Access denied
+          schema:
+            ref: '#/definitions/error'
+        404:
+          description: Not found
+          schema:
+            ref: '#/definitions/error'
+definitions:
+  error:
+    type: string
+    example: error message
