@@ -1,4 +1,4 @@
-{"level":"info","message":"listening on port 3000...","timestamp":"2019-05-26T13:39:20.956Z"}
-{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-05-26T13:39:20.991Z"}
-{"level":"info","message":"listening on port 3000...","timestamp":"2019-05-26T13:40:28.077Z"}
-{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-05-26T13:40:28.108Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-05-26T14:29:58.512Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-05-26T14:29:58.541Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-05-26T14:31:34.339Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-05-26T14:31:34.369Z"}
