@@ -59,8 +59,7 @@ class DocumentController {
 		const { error } = validateDocument(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
 
-		const user1 = await User.findById(req.body.userId);
-		if (!user1) return res.status(400).send('Invalid user');
+		const user1 = await User.findById(req.user._id);
 
 		const document = new Document({
 			title: req.body.title,
