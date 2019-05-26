@@ -2,4 +2,4 @@ NODE_ENV=NODE_ENVIRONMENT
 PORT=PORT
 db_test=TEST_DATABASE
 db_production=DATABASE
-jwtPrivateKey=WT_KEY
+jwtPrivateKey=JWT_KEY
