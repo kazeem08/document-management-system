@@ -12,8 +12,7 @@ class UserController {
 
 	//method for getting user by Id
 	async getById(req, res) {
-		const user = await User.findById(req.params.id);
-		if (!user) return res.status(404).send('No user exist with this ID');
+		const user = await User.findById(req.user._id);
 		res.send(user);
 	}
 
@@ -53,11 +52,8 @@ class UserController {
 
 	//method for updating user
 	async updateUser(req, res) {
-		let user = await User.findById(req.params.id);
-		if (!user) return res.status(404).send('User does not exist');
-
-		user = await User.findByIdAndUpdate(
-			req.params.id,
+		let user = await User.findByIdAndUpdate(
+			req.user._id,
 			{
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
@@ -65,8 +61,8 @@ class UserController {
 				email: req.body.email,
 				password: req.body.password,
 				role: {
-					_id: user.role._id,
-					title: user.role.title
+					_id: req.user.role._id,
+					title: req.user.role.title
 				}
 			},
 			{ new: true }
@@ -77,8 +73,7 @@ class UserController {
 
 	//method for deleting user
 	async deleteUser(req, res) {
-		let user = await User.findByIdAndDelete(req.params.id);
-		if (!user) return res.status(404).send('User does not exist');
+		let user = await User.findByIdAndDelete(req.user._id);
 
 		res.send(user);
 	}

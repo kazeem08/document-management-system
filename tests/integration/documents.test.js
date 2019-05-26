@@ -261,7 +261,6 @@ describe('Documents', () => {
 
 			const document = {
 				title: 'document1',
-				userId: user._id,
 				content: 'welcome to first document'
 			};
 
@@ -270,7 +269,7 @@ describe('Documents', () => {
 				.send(document)
 				.set('x-auth-token', token);
 			expect(res.status).toBe(200);
-			expect(res.body).toHaveProperty('dateCreated');
+			expect(res.body).toHaveProperty('createdAt');
 			expect(res.body).toHaveProperty('access', 'public');
 		});
 	});

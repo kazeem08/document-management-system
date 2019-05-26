@@ -84,35 +84,22 @@ describe('Users', () => {
 
 		it('should return 401 if user is not logged in', async () => {
 			token = '';
-			const id = mongoose.Types.ObjectId();
-			const res = await request(app).get('/api/users/' + id);
+			const res = await request(app).get('/api/users/me');
 			expect(res.status).toBe(401);
 		});
 
-		it('should return 403 if user is not an admin', async () => {
-			const id = mongoose.Types.ObjectId();
-			const res = await request(app)
-				.get('/api/users/' + id)
-				.set('x-auth-token', token);
-			expect(res.status).toBe(403);
-		});
-
-		it('should return 404 if no user exists with the ID', async () => {
-			user.role.title = 'Admin';
-			token = new User(user).generateAuthToken();
-			const id = mongoose.Types.ObjectId();
-			const res = await request(app)
-				.get('/api/users/' + id)
-				.set('x-auth-token', token);
-			expect(res.status).toBe(404);
-		});
+		// it('should return 403 if user is not an admin', async () => {
+		// 	const res = await request(app)
+		// 		.get('/api/users/me')
+		// 		.set('x-auth-token', token);
+		// 	expect(res.status).toBe(403);
+		// });
 
 		it('should return user if Id is valid', async () => {
-			user.role.title = 'Admin';
 			await user.save();
 			token = new User(user).generateAuthToken();
 			const res = await request(app)
-				.get('/api/users/' + user._id)
+				.get('/api/users/me')
 				.set('x-auth-token', token);
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveProperty('_id');
@@ -242,32 +229,15 @@ describe('Users', () => {
 			await Role.deleteMany();
 		});
 		it('should return 401 if user is not logged in', async () => {
-			const id = mongoose.Types.ObjectId();
-			const res = await request(app).put('/api/users/' + id);
+			const res = await request(app).put('/api/users/me');
 			expect(res.status).toBe(401);
 		});
 
-		it('should return 404 if ID is invalid', async () => {
-			const id = 1;
-			const res = await request(app)
-				.put('/api/users/' + id)
-				.set('x-auth-token', token);
-			expect(res.status).toBe(404);
-		});
-
-		it('should return 404 if ID of user does not exist', async () => {
-			const id = mongoose.Types.ObjectId();
-			const res = await request(app)
-				.put('/api/users/' + id)
-				.set('x-auth-token', token);
-			expect(res.status).toBe(404);
-		});
-
-		it('should update if user id is valid', async () => {
+		it('should update user', async () => {
 			await user.save();
 
 			const res = await request(app)
-				.put('/api/users/' + user._id)
+				.put('/api/users/me')
 				.set('x-auth-token', token)
 				.send({ firstName: 'Olanrewaju' });
 
@@ -301,32 +271,15 @@ describe('Users', () => {
 		});
 
 		it('should return 401 if user is not logged in', async () => {
-			const id = mongoose.Types.ObjectId();
-			const res = await request(app).delete('/api/users/' + id);
+			const res = await request(app).delete('/api/users/me');
 			expect(res.status).toBe(401);
-		});
-
-		it('should return 404 if ID is invalid', async () => {
-			const id = 1;
-			const res = await request(app)
-				.delete('/api/users/' + id)
-				.set('x-auth-token', token);
-			expect(res.status).toBe(404);
-		});
-
-		it('should return 404 if user does not exist', async () => {
-			const id = mongoose.Types.ObjectId();
-			const res = await request(app)
-				.delete('/api/users/' + id)
-				.set('x-auth-token', token);
-			expect(res.status).toBe(404);
 		});
 
 		it('should delete user', async () => {
 			await user.save();
 
 			const res = await request(app)
-				.delete('/api/users/' + user._id)
+				.delete('/api/users/me')
 				.set('x-auth-token', token);
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveProperty('_id');
