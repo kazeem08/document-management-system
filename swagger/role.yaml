@@ -4,6 +4,12 @@ path:
       tags:
         - Role
       description: get all documents
+      parameters:
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
       responses:
         200:
           description: Successful
@@ -28,17 +34,20 @@ path:
               title:
                 type: string
                 example: Admin
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
       responses:
         201:
           description: Successful
           schema:
-            type: array
-            items:
-              type: object
-              properties:
-                title:
-                  type: string
-                  example: Admin
+            type: object
+            properties:
+              title:
+                type: string
+                example: Admin
         400:
           description: Bad Request
           schema:
@@ -55,7 +64,7 @@ path:
     put:
       tags:
         - Role
-      description: create a Role
+      description: Update a Role
       parameters:
         - name: payload
           in: body
@@ -70,6 +79,11 @@ path:
           schema:
             type: string
             example: 5cd1e8812e3dad0a22afac1f
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
       responses:
         200:
           description: Successful
@@ -102,6 +116,11 @@ path:
           schema:
             type: string
             example: 5cd1e8812e3dad0a22afac1j
+        - in: header
+          name: x-auth-token
+          description: Token is required
+          schema:
+            type: string
       responses:
         200:
           schema:

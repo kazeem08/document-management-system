@@ -10,15 +10,15 @@ const router = express.Router();
 router.get('/', [auth, admin], userController.getAllUsers);
 
 //route to get user by Id
-router.get('/:id', validateObjectId, [auth, admin], userController.getById);
+router.get('/me', auth, userController.getById);
 
 //route to create user
 router.post('/', userController.createUser);
 
 //route to update user
-router.put('/:id', validateObjectId, auth, userController.updateUser);
+router.put('/me', auth, userController.updateUser);
 
 //route to delete
-router.delete('/:id', validateObjectId, auth, userController.deleteUser);
+router.delete('/me', auth, userController.deleteUser);
 
 export { router as users };
