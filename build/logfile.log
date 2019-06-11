@@ -1,0 +1,2 @@
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-11T22:05:25.983Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-11T22:05:26.005Z"}

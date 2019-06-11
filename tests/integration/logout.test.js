@@ -1,6 +1,5 @@
 import 'babel-polyfill';
 import request from 'supertest';
-import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { app } from '../../index';
 import { User } from '../../models/user';

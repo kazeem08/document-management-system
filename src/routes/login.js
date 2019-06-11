@@ -1,6 +1,6 @@
 import express from 'express';
 import Joi from '@hapi/joi';
-import { LoginController, loginController } from '../controllers/login';
+import { loginController } from '../controllers/login';
 
 const router = express.Router();
 
