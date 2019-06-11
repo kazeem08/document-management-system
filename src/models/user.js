@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { roleSchema } from './role';
-import dotenv from 'dotenv';
 import Joi from '@hapi/joi';
-dotenv.config();
 
 //creating user schema
 const userSchema = new mongoose.Schema({

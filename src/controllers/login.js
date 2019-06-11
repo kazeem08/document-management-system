@@ -15,7 +15,7 @@ class LoginController {
 		if (!password) return res.status(400).send('Invalid email/password');
 
 		const token = user.generateAuthToken();
-		res.send(token);
+		res.send({ token: token });
 	}
 }
 

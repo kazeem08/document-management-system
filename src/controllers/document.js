@@ -42,7 +42,7 @@ class DocumentController {
 				.or([
 					{ access: 'public' },
 					{ 'user._id': req.user._id },
-					{ 'user.role.title': req.user.role.title }
+					{ 'user.role.title': req.user.role.title, access: { $ne: 'private' } }
 				])
 				.limit(perPage)
 				.skip(skip)

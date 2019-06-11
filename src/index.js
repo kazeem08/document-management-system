@@ -1,13 +1,15 @@
-import mongoose from 'mongoose';
 import express from 'express';
 import './startup/validation';
-// import 'express-async-errors';
 import 'dotenv/config';
 import winston from 'winston';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import { errorHandling } from './startup/logging';
+import { jwtKey } from './startup/config';
+import { routes } from './startup/routes';
+import './startup/db';
 
 let option = {
 	swaggerDefinition: {
@@ -25,7 +27,7 @@ let option = {
 			{ name: 'Document', description: 'Document model' }
 		]
 	},
-	apis: ['./swagger/*.yaml']
+	apis: ['./src/swagger/*.yaml']
 };
 
 const spec = swaggerJsdoc(option);
@@ -37,13 +39,9 @@ app.use(express.json());
 app.use(morgan('tiny'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
 
-import { errorHandling } from './startup/logging';
 errorHandling();
 
-import './startup/db';
-import { jwtKey } from './startup/config';
 jwtKey();
-import { routes } from './startup/routes';
 routes(app);
 
 const port = process.env.PORT; //getting the port
