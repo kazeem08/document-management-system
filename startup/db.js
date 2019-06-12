@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'staging') {
 	db = process.env.db_production;
 
 	mongoose
-		.connect(db, { useNewUrlParser: true })
+		.connect(db, { useNewUrlParser: true, useCreateIndex: true })
 		.then(() => winston.info('connected to mongo db...'))
 		.catch(err => winston.info(err));
 }

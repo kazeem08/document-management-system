@@ -97,3 +97,37 @@
 {"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-11T21:57:25.342Z"}
 {"level":"info","message":"listening on port 3000...","timestamp":"2019-06-11T22:03:49.961Z"}
 {"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-11T22:03:49.984Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T07:42:24.474Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T07:42:24.495Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T07:42:53.211Z"}
+{"level":"info","message":"connected to mongo db...","timestamp":"2019-06-12T07:42:54.889Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T10:48:04.391Z"}
+{"level":"info","message":"connected to mongo db...","timestamp":"2019-06-12T10:48:05.862Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T10:48:57.901Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T10:48:57.925Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:49:19.744Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:49:20.364Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:49:20.867Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:49:21.359Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:49:21.627Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:51:59.551Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:52:00.040Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:52:00.753Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:52:01.202Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:52:01.635Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T10:53:40.702Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T10:53:40.734Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T10:55:02.720Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T10:55:02.752Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:56:16.105Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:56:16.682Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:56:17.320Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:56:17.817Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T10:56:18.225Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T11:01:41.239Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T11:01:41.265Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T11:02:30.342Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T11:02:30.925Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T11:02:31.601Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T11:02:32.024Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T11:02:32.442Z"}
