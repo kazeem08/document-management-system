@@ -38,9 +38,8 @@
 	},
 	"scripts": {
 		"test": "export NODE_ENV=test && jest --runInBand  --watchAll --verbose --coverage",
-		"start": "babel-node index.js",
+		"start": "nodemon --exec babel-node index.js",
 		"dev": "nodemon --exec babel-node index.js",
-		"build": "babel src -d build",
 		"seed": "nodemon --exec babel-node seeder.js",
 		"seed-refresh": "nodemon --exec babel-node seeder-refresh.js"
 	},

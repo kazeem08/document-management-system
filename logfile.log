@@ -131,3 +131,7 @@
 {"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T11:02:31.601Z"}
 {"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T11:02:32.024Z"}
 {"level":"info","message":"connected to mongodb://localhost/document_management_tests","timestamp":"2019-06-12T11:02:32.442Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T11:48:19.605Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T11:48:19.636Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T11:52:37.811Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T11:52:37.843Z"}
