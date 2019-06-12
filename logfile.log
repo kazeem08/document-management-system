@@ -135,3 +135,5 @@
 {"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T11:48:19.636Z"}
 {"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T11:52:37.811Z"}
 {"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T11:52:37.843Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:03:04.083Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:03:04.117Z"}
