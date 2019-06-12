@@ -1,7 +1,7 @@
-import express from 'express';
-import { auth } from '../middleware/auth';
-import { validateObjectId } from '../middleware/validateObjectId';
-import { documentController } from '../controllers/document';
+const express = require('express');
+const auth = require('../middleware/auth');
+const validateObjectId = require('../middleware/validateObjectId');
+const documentController = require('../controllers/document');
 const router = express.Router();
 
 //route for getting document with private access
@@ -21,4 +21,4 @@ router.put('/:id', validateObjectId, auth, documentController.updateDocs);
 
 router.delete('/:id', validateObjectId, auth, documentController.deleteDocs);
 
-export { router as documents };
+module.exports = { router };

@@ -5,4 +5,4 @@ function admin(req, res, next) {
 	next();
 }
 
-export { admin };
+module.exports = admin;

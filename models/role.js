@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import Joi from '@hapi/joi';
+const mongoose = require('mongoose');
+const Joi = require('@hapi/joi');
 
 //creating roleSchema
 const roleSchema = new mongoose.Schema({
@@ -34,4 +34,4 @@ function validateRole(role) {
 	return Joi.validate(role, schema);
 }
 
-export { Role, validateRole, roleSchema };
+module.exports = { Role, validateRole, roleSchema };

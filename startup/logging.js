@@ -1,6 +1,6 @@
-import winston from 'winston';
+const winston = require('winston');
 // require("winston-mongodb");
-import 'express-async-errors';
+require('express-async-errors');
 
 function errorHandling() {
 	winston.handleExceptions(
@@ -23,4 +23,4 @@ function errorHandling() {
 	// winston.add(winston.transports.MongoDB, { db: "mongodb://localhost/vidly" });
 }
 
-export { errorHandling };
+module.exports = errorHandling;

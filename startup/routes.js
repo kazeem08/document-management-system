@@ -1,19 +1,18 @@
-import { roles } from '../routes/roles';
-import { users } from '../routes/users';
-import { login } from '../routes/login';
-import { documents } from '../routes/documents';
-import { logout } from '../routes/logout';
-
-import { error } from '../middleware/error';
+const rolesRoute = require('../routes/roles');
+const usersRoute = require('../routes/users');
+const loginRoute = require('../routes/login');
+const documentRoute = require('../routes/documents');
+const logoutRoute = require('../routes/logout');
+const error = require('../middleware/error');
 
 function routes(app) {
-	app.use('/api/roles', roles);
-	app.use('/api/users', users);
-	app.use('/api/login', login);
-	app.use('/api/documents', documents);
-	app.use('/api/logout', logout);
+	app.use('/api/roles', rolesRoute.router);
+	app.use('/api/users', usersRoute.router);
+	app.use('/api/login', loginRoute.router);
+	app.use('/api/documents', documentRoute.router);
+	app.use('/api/logout', logoutRoute.router);
 
 	app.use(error);
 }
 
-export { routes };
+module.exports = routes;

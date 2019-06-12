@@ -1,8 +1,7 @@
-import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
-import { roleSchema } from './role';
-import Joi from '@hapi/joi';
-
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const role = require('../models/role');
+const Joi = require('@hapi/joi');
 //creating user schema
 const userSchema = new mongoose.Schema({
 	firstName: {
@@ -39,7 +38,7 @@ const userSchema = new mongoose.Schema({
 		maxlength: 200
 	},
 	role: {
-		type: roleSchema,
+		type: role.roleSchema,
 		required: true
 	}
 });
@@ -83,4 +82,4 @@ function validateUser(user) {
 	return Joi.validate(user, schema);
 }
 
-export { User, validateUser };
+module.exports = { User, validateUser };

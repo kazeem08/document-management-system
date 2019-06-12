@@ -1,9 +1,8 @@
-import 'babel-polyfill';
-import request from 'supertest';
-import mongoose, { mongo } from 'mongoose';
-import { Role } from '../../models/role';
-import { User } from '../../models/user';
-import { app } from '../../index';
+const request = require('supertest');
+const mongoose = require('mongoose');
+const app = require('../../index');
+const roleModel = require('../../models/role');
+const userModel = require('../../models/user');
 
 describe('Roles', () => {
 	describe('GET', () => {
@@ -16,11 +15,11 @@ describe('Roles', () => {
 			}
 		};
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 		});
 
 		afterEach(async () => {
-			await Role.deleteMany({});
+			await roleModel.Role.deleteMany({});
 		});
 
 		it('should get all roles if user is logged in as an admin', async () => {
@@ -29,7 +28,7 @@ describe('Roles', () => {
 			// });
 
 			const role = { title: 'Admin' };
-			await Role.create(role);
+			await roleModel.Role.create(role);
 			// await role.save();
 
 			const res = await request(app)
@@ -51,11 +50,11 @@ describe('Roles', () => {
 			}
 		};
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 		});
 
 		afterEach(async () => {
-			await Role.deleteMany({});
+			await roleModel.Role.deleteMany({});
 		});
 
 		it('should return 400 if no role is found', async () => {
@@ -67,7 +66,7 @@ describe('Roles', () => {
 		});
 
 		it('should return a role if a valid id is passed ', async () => {
-			const role = new Role({
+			const role = new roleModel.Role({
 				name: 'Regular'
 			});
 
@@ -102,12 +101,12 @@ describe('Roles', () => {
 			}
 		};
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			title = 'Admin';
 		});
 
 		afterEach(async () => {
-			await Role.remove({});
+			await roleModel.Role.remove({});
 		});
 		it('should return 401 if user is not logged in', async () => {
 			token = '';
@@ -123,7 +122,7 @@ describe('Roles', () => {
 
 		it('should return 400 if role is less than 5 characters', async () => {
 			user.role.title = 'Admin';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			title = 'fff';
 			const res = await exec();
 
@@ -132,7 +131,7 @@ describe('Roles', () => {
 
 		it('should return 400 if role is more than 30 characters', async () => {
 			user.role.title = 'Admin';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			title = new Array(35).join('k');
 			const res = await exec();
 
@@ -141,14 +140,14 @@ describe('Roles', () => {
 
 		it('should return 400 if role already exist', async () => {
 			const roles = [{ title: 'Admin' }, { title: 'Regular' }];
-			await Role.collection.insertMany(roles);
+			await roleModel.Role.collection.insertMany(roles);
 			const res = await exec();
 			expect(res.status).toBe(400);
 		});
 
 		it('should validate Admin role exist', async () => {
 			user.role.title = 'Admin';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			const res = await exec();
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveProperty('_id');
@@ -158,7 +157,7 @@ describe('Roles', () => {
 		it('should validate Regular role exist', async () => {
 			user.role.title = 'Admin';
 			title = 'Regular';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			const res = await exec();
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveProperty('_id');
@@ -184,14 +183,14 @@ describe('Roles', () => {
 			}
 		};
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			id = mongoose.Types.ObjectId();
 			title = 'Regular';
 		});
 
 		afterEach(async () => {
-			await Role.deleteMany({});
-			await User.deleteMany();
+			await roleModel.Role.deleteMany({});
+			await userModel.User.deleteMany();
 		});
 
 		it('should return 401 if user is not logged in', async () => {
@@ -213,7 +212,7 @@ describe('Roles', () => {
 
 		it('should return 400 if role is less than 5 characters', async () => {
 			user.role.title = 'Admin';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			title = 'nn';
 			const res = await exec();
 			expect(res.status).toBe(400);
@@ -221,7 +220,7 @@ describe('Roles', () => {
 
 		it('should return 400 if role is more than 30 characters', async () => {
 			user.role.title = 'Admin';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			title = new Array(35).join('k');
 			const res = await exec();
 
@@ -231,24 +230,24 @@ describe('Roles', () => {
 		it('should return 404 if role does not exist', async () => {
 			user.role.title = 'Admin';
 			title = 'hfjfyk';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			const res = await exec();
 
 			expect(res.status).toBe(404);
 		});
 
 		it('should update role if found', async () => {
-			const role = new Role({
+			const role = new roleModel.Role({
 				title: 'role1'
 			});
 			await role.save();
 			user.role.title = 'Admin';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			const res = await request(app)
 				.put('/api/roles/' + role._id)
 				.set('x-auth-token', token)
 				.send({ title: 'role2' });
-			const updatedRole = await Role.findById(role._id);
+			const updatedRole = await roleModel.Role.findById(role._id);
 
 			expect(updatedRole.title).toBe('role2');
 		});
@@ -272,14 +271,14 @@ describe('Roles', () => {
 			}
 		};
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			id = mongoose.Types.ObjectId();
 			title = 'Regular';
 		});
 
 		afterEach(async () => {
-			await Role.deleteMany({});
-			await User.deleteMany();
+			await roleModel.Role.deleteMany({});
+			await userModel.User.deleteMany();
 		});
 
 		it('should return 401 if user is not logged in', async () => {
@@ -291,7 +290,7 @@ describe('Roles', () => {
 
 		it('should return 403 if user is not an admin', async () => {
 			user.role.title = 'staff';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			const res = await exec();
 			expect(res.status).toBe(403);
 		});
@@ -304,19 +303,19 @@ describe('Roles', () => {
 
 		it('should return 404 if role does not exist', async () => {
 			user.role.title = 'Admin';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			const res = await exec();
 
 			expect(res.status).toBe(404);
 		});
 
 		it('should delete role if found', async () => {
-			const role = new Role({
+			const role = new roleModel.Role({
 				title: 'role1'
 			});
 			await role.save();
 			user.role.title = 'Admin';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			id = role._id;
 			const res = await exec();
 			expect(res.status).toBe(200);
