@@ -4,7 +4,6 @@
 	"description": "",
 	"main": "index.js",
 	"dependencies": {
-		"@babel/cli": "^7.4.4",
 		"@babel/runtime": "^7.4.5",
 		"@hapi/joi": "^15.0.3",
 		"bcrypt": "^3.0.6",
@@ -30,10 +29,7 @@
 		"@babel/core": "^7.4.3",
 		"@babel/node": "^7.2.2",
 		"@babel/preset-env": "^7.4.3",
-		"babel-loader": "^8.0.6",
 		"babel-polyfill": "^6.26.0",
-		"babel-preset-es2015": "^6.24.1",
-		"babel-preset-stage-0": "^6.24.1",
 		"jest": "^24.7.1"
 	},
 	"scripts": {
