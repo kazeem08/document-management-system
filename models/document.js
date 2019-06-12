@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import { roleSchema } from '../models/role';
-import Joi from '@hapi/joi';
+const mongoose = require('mongoose');
+const role = require('../models/role');
+const Joi = require('@hapi/joi');
 
 //creating custom user schema
 const userSchema = new mongoose.Schema({
@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
 		maxlength: 100
 	},
 	role: {
-		type: roleSchema,
+		type: role.roleSchema,
 		required: true
 	}
 });
@@ -68,4 +68,4 @@ function validateDocument(document) {
 	return Joi.validate(document, schema);
 }
 
-export { Document, documentSchema, validateDocument };
+module.exports = { Document, documentSchema, validateDocument };

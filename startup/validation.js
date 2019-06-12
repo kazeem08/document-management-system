@@ -1,5 +1,6 @@
-import Joi from '@hapi/joi';
-import value from 'joi-objectid';
+const Joi = require('@hapi/joi');
 
 //validating objectId
-export default (Joi.objectId = value(Joi));
+Joi.objectId = require('joi-objectid')(Joi);
+
+module.exports = Joi.objectId;

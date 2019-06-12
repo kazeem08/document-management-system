@@ -1,12 +1,11 @@
-import 'babel-polyfill';
-import request from 'supertest';
-import bcrypt from 'bcrypt';
-import mongoose from 'mongoose';
-import { app } from '../../index';
-import { User } from '../../models/user';
+const request = require('supertest');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const app = require('../../index');
+const userModel = require('../../models/user');
 
 describe('Login', () => {
-	const user = new User({
+	const user = new userModel.User({
 		firstName: 'Kazeem',
 		lastName: 'lanre',
 		userName: 'kazeem08',
@@ -19,7 +18,7 @@ describe('Login', () => {
 	});
 
 	afterEach(async () => {
-		await User.deleteMany();
+		await userModel.User.deleteMany();
 	});
 
 	it('shoud if email is less than 7 characters', async () => {
@@ -59,7 +58,7 @@ describe('Login', () => {
 		const salt = await bcrypt.genSalt(10);
 		const password = await bcrypt.hash('123456', salt);
 
-		await User.collection.insertOne({
+		await userModel.User.collection.insertOne({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
 			userName: 'kazeem08',

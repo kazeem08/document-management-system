@@ -1,8 +1,7 @@
-import 'babel-polyfill';
-import request from 'supertest';
-import mongoose from 'mongoose';
-import { app } from '../../index';
-import { User } from '../../models/user';
+const request = require('supertest');
+const mongoose = require('mongoose');
+const app = require('../../index');
+const userModel = require('../../models/user');
 
 describe('Logout', () => {
 	let token;
@@ -14,11 +13,11 @@ describe('Logout', () => {
 		}
 	};
 	beforeEach(() => {
-		token = new User(user).generateAuthToken();
+		token = new userModel.User(user).generateAuthToken();
 	});
 
 	afterEach(async () => {
-		await User.deleteMany();
+		await userModel.User.deleteMany();
 	});
 
 	it('should log user out', async () => {

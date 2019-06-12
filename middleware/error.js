@@ -1,4 +1,4 @@
-import winston from 'winston';
+const winston = require('winston');
 
 //error handling for server
 function error(err, req, res, next) {
@@ -7,4 +7,4 @@ function error(err, req, res, next) {
 	res.status(500).send('Something failed');
 }
 
-export { error };
+module.exports = error;

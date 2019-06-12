@@ -1,14 +1,13 @@
-import 'babel-polyfill';
-import request from 'supertest';
-import mongoose from 'mongoose';
-import { User } from '../../models/user';
-import { Role } from '../../models/role';
-import { app } from '../../index';
+const request = require('supertest');
+const mongoose = require('mongoose');
+const app = require('../../index');
+const roleModel = require('../../models/role');
+const userModel = require('../../models/user');
 
 describe('Users', () => {
 	describe('GET', () => {
 		let token;
-		const user = new User({
+		const user = new userModel.User({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
 			userName: 'kazeem08',
@@ -21,11 +20,11 @@ describe('Users', () => {
 		});
 
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 		});
 
 		afterEach(async () => {
-			await User.deleteMany();
+			await userModel.User.deleteMany();
 		});
 
 		it('should return 401 if user is not logged in', async () => {
@@ -43,7 +42,7 @@ describe('Users', () => {
 
 		it('should get all users', async () => {
 			user.role.title = 'Admin';
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 
 			await user.save();
 			const res = await request(app)
@@ -58,7 +57,7 @@ describe('Users', () => {
 
 	describe('GET by ID', () => {
 		let token;
-		const user = new User({
+		const user = new userModel.User({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
 			userName: 'kazeem08',
@@ -71,11 +70,11 @@ describe('Users', () => {
 		});
 
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 		});
 
 		afterEach(async () => {
-			await User.deleteMany();
+			await userModel.User.deleteMany();
 		});
 		it('should return 404 if id is invalid', async () => {
 			const res = await request(app).get('/api/users/1');
@@ -97,7 +96,7 @@ describe('Users', () => {
 
 		it('should return user if Id is valid', async () => {
 			await user.save();
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			const res = await request(app)
 				.get('/api/users/me')
 				.set('x-auth-token', token);
@@ -111,8 +110,8 @@ describe('Users', () => {
 		beforeEach(() => {});
 
 		afterEach(async () => {
-			await User.deleteMany();
-			await Role.deleteMany();
+			await userModel.User.deleteMany();
+			await roleModel.Role.deleteMany();
 		});
 
 		it('should return req.body validation fails', async () => {
@@ -131,7 +130,7 @@ describe('Users', () => {
 		});
 
 		it('should return 400 if user already exists', async () => {
-			const newUser = new User({
+			const newUser = new userModel.User({
 				firstName: 'Kazeem',
 				lastName: 'lanre',
 				userName: 'kazeem08',
@@ -145,7 +144,7 @@ describe('Users', () => {
 
 			await newUser.save();
 
-			const role = new Role({
+			const role = new roleModel.Role({
 				_id: mongoose.Types.ObjectId(),
 				title: 'leve1'
 			});
@@ -184,7 +183,7 @@ describe('Users', () => {
 		});
 
 		it('should create new user', async () => {
-			const role = new Role({
+			const role = new roleModel.Role({
 				_id: mongoose.Types.ObjectId(),
 				title: 'leve1'
 			});
@@ -208,7 +207,7 @@ describe('Users', () => {
 
 	describe('PUT', () => {
 		let token;
-		const user = new User({
+		const user = new userModel.User({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
 			userName: 'kazeem08',
@@ -221,12 +220,12 @@ describe('Users', () => {
 		});
 
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 		});
 
 		afterEach(async () => {
-			await User.deleteMany();
-			await Role.deleteMany();
+			await userModel.User.deleteMany();
+			await roleModel.Role.deleteMany();
 		});
 		it('should return 401 if user is not logged in', async () => {
 			const res = await request(app).put('/api/users/me');
@@ -241,7 +240,7 @@ describe('Users', () => {
 				.set('x-auth-token', token)
 				.send({ firstName: 'Olanrewaju' });
 
-			const updatedUser = await User.findById(user._id);
+			const updatedUser = await userModel.User.findById(user._id);
 			expect(res.status).toBe(200);
 			expect(updatedUser.firstName).toBe('Olanrewaju');
 		});
@@ -249,7 +248,7 @@ describe('Users', () => {
 
 	describe('DELETE', () => {
 		let token;
-		const user = new User({
+		const user = new userModel.User({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
 			userName: 'kazeem08',
@@ -262,12 +261,12 @@ describe('Users', () => {
 		});
 
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 		});
 
 		afterEach(async () => {
-			await User.deleteMany();
-			await Role.deleteMany();
+			await userModel.User.deleteMany();
+			await roleModel.Role.deleteMany();
 		});
 
 		it('should return 401 if user is not logged in', async () => {

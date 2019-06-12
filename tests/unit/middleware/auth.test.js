@@ -1,7 +1,6 @@
-import 'babel-polyfill';
-import mongoose from 'mongoose';
-import { User } from '../../../models/user';
-import { auth } from '../../../middleware/auth';
+const mongoose = require('mongoose');
+const auth = require('../../../middleware/auth');
+const userModel = require('../../models/user');
 
 describe('auth middleware', () => {
 	it('it should populate req.user with the payload of a valid JWT', () => {
@@ -12,7 +11,7 @@ describe('auth middleware', () => {
 				title: 'Regular'
 			}
 		};
-		const token = new User(user).generateAuthToken();
+		const token = new userModel.User(user).generateAuthToken();
 
 		const req = {
 			header: jest.fn().mockReturnValue(token)

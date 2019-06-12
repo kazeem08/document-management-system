@@ -1,10 +1,10 @@
-import { Document, validateDocument } from '../models/document';
-import { User } from '../models/user';
+const doc = require('../models/document');
+const userModel = require('../models/user');
 
 class DocumentController {
 	//method to get private access documents
 	async getPrivateDocs(req, res) {
-		const document = await Document.find({
+		const document = await doc.Document.find({
 			'user._id': req.user._id,
 			access: 'private'
 		});
@@ -16,7 +16,7 @@ class DocumentController {
 
 	//method to get role access documents
 	async getRoleDocs(req, res) {
-		const document = await Document.find({
+		const document = await doc.Document.find({
 			access: 'role',
 			'user.role.title': req.user.role.title
 		});
@@ -33,12 +33,12 @@ class DocumentController {
 		let skip = perPage * page - perPage;
 		let document;
 		if (req.user.role.title === 'Admin') {
-			document = await Document.find()
+			document = await doc.Document.find()
 				.limit(perPage)
 				.skip(skip)
 				.sort('-dateCreated');
 		} else {
-			document = await Document.find()
+			document = await doc.Document.find()
 				.or([
 					{ access: 'public' },
 					{ 'user._id': req.user._id },
@@ -56,12 +56,12 @@ class DocumentController {
 
 	//method to create documents
 	async createDocs(req, res) {
-		const { error } = validateDocument(req.body);
+		const { error } = doc.validateDocument(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
 
-		const user1 = await User.findById(req.user._id);
+		const user1 = await userModel.User.findById(req.user._id);
 
-		const document = new Document({
+		const document = new doc.Document({
 			title: req.body.title,
 			user: {
 				_id: user1._id,
@@ -80,10 +80,10 @@ class DocumentController {
 
 	//method to update documents
 	async updateDocs(req, res) {
-		let document = await Document.findById(req.params.id);
+		let document = await doc.Document.findById(req.params.id);
 		if (!document) return res.status(404).send('document does not exist');
 
-		document = await Document.findByIdAndUpdate(
+		document = await doc.Document.findByIdAndUpdate(
 			req.params.id,
 			{
 				title: req.body.title,
@@ -101,10 +101,10 @@ class DocumentController {
 
 	//method for deleting document
 	async deleteDocs(req, res) {
-		let document = await Document.findById(req.params.id);
+		let document = await doc.Document.findById(req.params.id);
 		if (!document) return res.status(404).send('document does not exist');
 
-		document = await Document.findByIdAndDelete(req.params.id);
+		document = await doc.Document.findByIdAndDelete(req.params.id);
 
 		res.send(document);
 	}
@@ -112,4 +112,4 @@ class DocumentController {
 
 const documentController = new DocumentController();
 
-export { documentController };
+module.exports = documentController;

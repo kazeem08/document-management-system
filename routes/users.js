@@ -1,7 +1,7 @@
-import express from 'express';
-import { auth } from '../middleware/auth';
-import { admin } from '../middleware/admin';
-import { userController } from '../controllers/user';
+const express = require('express');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
+const userController = require('../controllers/user');
 
 const router = express.Router();
 
@@ -20,4 +20,4 @@ router.put('/me', auth, userController.updateUser);
 //route to delete
 router.delete('/me', auth, userController.deleteUser);
 
-export { router as users };
+module.exports = { router };

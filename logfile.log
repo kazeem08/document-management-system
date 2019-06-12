@@ -137,3 +137,47 @@
 {"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T11:52:37.843Z"}
 {"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:03:04.083Z"}
 {"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:03:04.117Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:17:52.530Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:17:52.560Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:22:29.387Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:22:29.415Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:22:56.329Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:22:56.362Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:27:00.763Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:27:00.784Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:27:11.162Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:27:11.184Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:27:54.159Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:27:54.180Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:29:13.683Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:29:13.714Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:36:05.573Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:36:05.600Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:36:28.233Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:36:28.264Z"}
+{"message":"validateDocument is not defined","stack":"ReferenceError: validateDocument is not defined\n    at _callee4$ (/Users/kazeemjimoh/Desktop/My folders/document-management-system/controllers/document.js:203:17)\n    at tryCatch (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/regenerator-runtime/runtime.js:45:40)\n    at Generator.invoke [as _invoke] (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/regenerator-runtime/runtime.js:271:22)\n    at Generator.prototype.(anonymous function) [as next] (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/regenerator-runtime/runtime.js:97:21)\n    at asyncGeneratorStep (/Users/kazeemjimoh/Desktop/My folders/document-management-system/controllers/document.js:10:103)\n    at _next (/Users/kazeemjimoh/Desktop/My folders/document-management-system/controllers/document.js:12:194)\n    at /Users/kazeemjimoh/Desktop/My folders/document-management-system/controllers/document.js:12:364\n    at new Promise (<anonymous>)\n    at /Users/kazeemjimoh/Desktop/My folders/document-management-system/controllers/document.js:12:97\n    at createDocs (/Users/kazeemjimoh/Desktop/My folders/document-management-system/controllers/document.js:246:28)\n    at newFn (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/express-async-errors/index.js:16:20)\n    at Layer.handle [as handle_request] (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/express/lib/router/route.js:137:13)\n    at next (/Users/kazeemjimoh/Desktop/My folders/document-management-system/middleware/auth.js:11:3)\n    at newFn (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/express-async-errors/index.js:16:20)\n    at Layer.handle [as handle_request] (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/express/lib/router/layer.js:95:5)","level":"error","timestamp":"2019-06-12T12:37:00.321Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:38:19.968Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:38:20.006Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:39:00.342Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:39:00.364Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:40:30.841Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:40:30.875Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:41:02.810Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:41:02.844Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:41:32.558Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:41:32.591Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T12:41:39.948Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T12:41:39.986Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T13:24:46.024Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T13:24:46.058Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T13:28:53.010Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T13:28:53.042Z"}
+{"message":"E11000 duplicate key error collection: document_management.documents index: title_1 dup key: { : \"testinddgg\" }","stack":"MongoError: E11000 duplicate key error collection: document_management.documents index: title_1 dup key: { : \"testinddgg\" }\n    at Function.create (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/mongodb-core/lib/error.js:43:12)\n    at toError (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/mongodb/lib/utils.js:149:22)\n    at coll.s.topology.insert (/Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/mongodb/lib/operations/collection_ops.js:859:39)\n    at /Users/kazeemjimoh/Desktop/My folders/document-management-system/node_modules/mongodb-core/lib/connection/pool.js:397:18\n    at process._tickCallback (internal/process/next_tick.js:61:11)","driver":true,"name":"MongoError","index":0,"code":11000,"errmsg":"E11000 duplicate key error collection: document_management.documents index: title_1 dup key: { : \"testinddgg\" }","level":"error","timestamp":"2019-06-12T13:28:58.814Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T13:36:16.419Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T13:36:16.448Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T13:53:25.495Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T13:53:25.526Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T13:55:21.925Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T13:55:21.950Z"}
+{"level":"info","message":"listening on port 3000...","timestamp":"2019-06-12T13:55:45.344Z"}
+{"level":"info","message":"connected to mongodb://localhost/document_management","timestamp":"2019-06-12T13:55:45.366Z"}

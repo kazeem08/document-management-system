@@ -1,15 +1,16 @@
-import express from 'express';
-import './startup/validation';
-import 'dotenv/config';
-import winston from 'winston';
-import morgan from 'morgan';
-import bodyParser from 'body-parser';
-import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
-import { errorHandling } from './startup/logging';
-import { jwtKey } from './startup/config';
-import { routes } from './startup/routes';
-import './startup/db';
+const express = require('express');
+require('./startup/validation');
+require('dotenv/config');
+const winston = require('winston');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const errorHandling = require('./startup/logging');
+
+const jwtKey = require('./startup/config');
+const routes = require('./startup/routes');
+require('./startup/db');
 
 let option = {
 	swaggerDefinition: {
@@ -40,7 +41,6 @@ app.use(morgan('tiny'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
 
 errorHandling();
-
 jwtKey();
 routes(app);
 
@@ -50,4 +50,4 @@ if (process.env.NODE_ENV !== 'test') {
 	app.listen(port, () => winston.info(`listening on port ${port}...`));
 }
 
-export { app };
+module.exports = app;
