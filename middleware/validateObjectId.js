@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 //Validating object Id in the endpoint
 function validateObjectId(req, res, next) {
@@ -7,4 +7,4 @@ function validateObjectId(req, res, next) {
 	next();
 }
 
-export { validateObjectId };
+module.exports = validateObjectId;

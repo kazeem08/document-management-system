@@ -7,4 +7,4 @@ function jwtKey() {
 	}
 }
 
-export { jwtKey };
+module.exports = jwtKey;

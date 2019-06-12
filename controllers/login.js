@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt';
-import { User } from '../models/user';
-import { validate } from '../routes/login';
+const bcrypt = require('bcrypt');
+const userModel = require('../models/user');
+const validate = require('../routes/login');
 
 class LoginController {
 	//method for logging in
@@ -8,7 +8,7 @@ class LoginController {
 		const { error } = validate(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
 
-		const user = await User.findOne({ email: req.body.email });
+		const user = await userModel.User.findOne({ email: req.body.email });
 		if (!user) return res.status(400).send('Invalid email or password');
 
 		const password = await bcrypt.compare(req.body.password, user.password);
@@ -21,4 +21,4 @@ class LoginController {
 
 const loginController = new LoginController();
 
-export { loginController };
+module.exports = loginController;

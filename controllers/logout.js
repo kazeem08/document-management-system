@@ -7,4 +7,4 @@ class LogoutController {
 
 const logoutController = new LogoutController();
 
-export { logoutController };
+module.exports = logoutController;

@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import winston from 'winston';
+const mongoose = require('mongoose');
+const winston = require('winston');
 
 let db;
 

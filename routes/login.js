@@ -1,6 +1,6 @@
-import express from 'express';
-import Joi from '@hapi/joi';
-import { loginController } from '../controllers/login';
+const express = require('express');
+const Joi = require('@hapi/joi');
+const loginController = require('../controllers/login');
 
 const router = express.Router();
 
@@ -23,4 +23,5 @@ function validate(req) {
 	return Joi.validate(req, schema);
 }
 
-export { router as login, validate };
+// export { router as login, validate };
+module.exports = { router, validate };

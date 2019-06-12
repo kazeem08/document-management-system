@@ -1,14 +1,13 @@
-import 'babel-polyfill';
-import request from 'supertest';
-import mongoose from 'mongoose';
-import { app } from '../../index';
-import { User } from '../../models/user';
-import { Document } from '../../models/document';
+const request = require('supertest');
+const mongoose = require('mongoose');
+const app = require('../../index');
+const userModel = require('../../models/user');
+const doc = require('../../models/document');
 
 describe('Documents', () => {
 	describe('GET', () => {
 		let token;
-		const user = new User({
+		const user = new userModel.User({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
 			userName: 'kazeem08',
@@ -20,7 +19,7 @@ describe('Documents', () => {
 			}
 		});
 
-		const user2 = new User({
+		const user2 = new userModel.User({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
 			userName: 'kazem08',
@@ -33,11 +32,11 @@ describe('Documents', () => {
 		});
 
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 		});
 		afterEach(async () => {
-			await User.deleteMany();
-			await Document.deleteMany();
+			await userModel.User.deleteMany();
+			await doc.Document.deleteMany();
 		});
 
 		it('should return invalid token', async () => {
@@ -50,7 +49,7 @@ describe('Documents', () => {
 		});
 
 		it('should return all files if user is an admin', async () => {
-			const document = new Document({
+			const document = new doc.Document({
 				title: 'document1',
 				user: user2,
 				content: 'welcome to first document',
@@ -58,7 +57,7 @@ describe('Documents', () => {
 			});
 			await document.save();
 
-			token = new User(user2).generateAuthToken();
+			token = new userModel.User(user2).generateAuthToken();
 			const res = await request(app)
 				.get('/api/documents?page=1')
 				.set('x-auth-token', token);
@@ -67,7 +66,7 @@ describe('Documents', () => {
 		});
 
 		it('should return all files with filtered conditions', async () => {
-			const document = new Document({
+			const document = new doc.Document({
 				title: 'document1',
 				user: user,
 				content: 'welcome to first document',
@@ -75,7 +74,7 @@ describe('Documents', () => {
 			});
 			await document.save();
 
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			const res = await request(app)
 				.get('/api/documents?page=1')
 				.set('x-auth-token', token);
@@ -110,7 +109,7 @@ describe('Documents', () => {
 		// });
 
 		it('should return 404 if user is not the creator of the document', async () => {
-			const document = new Document({
+			const document = new doc.Document({
 				title: 'document1',
 				user: user,
 				content: 'welcome to first document',
@@ -118,7 +117,7 @@ describe('Documents', () => {
 			});
 			await document.save();
 
-			token = new User(user2).generateAuthToken();
+			token = new userModel.User(user2).generateAuthToken();
 
 			const res = await request(app)
 				.get('/api/documents/private')
@@ -128,7 +127,7 @@ describe('Documents', () => {
 		});
 
 		it('should return record if user is  the creator of the document', async () => {
-			const document = new Document({
+			const document = new doc.Document({
 				title: 'document1',
 				user: user,
 				content: 'welcome to first document',
@@ -145,7 +144,7 @@ describe('Documents', () => {
 		});
 
 		it('should return 404 if user is not on the same role when accessing documents that have acess as role', async () => {
-			const document = new Document({
+			const document = new doc.Document({
 				title: 'document1',
 				user: user,
 				content: 'welcome to first document',
@@ -153,7 +152,7 @@ describe('Documents', () => {
 			});
 			await document.save();
 
-			token = new User(user2).generateAuthToken();
+			token = new userModel.User(user2).generateAuthToken();
 			const res = await request(app)
 				.get('/api/documents/role')
 				.set('x-auth-token', token);
@@ -162,7 +161,7 @@ describe('Documents', () => {
 		});
 
 		it('should return the record if user is on the same role', async () => {
-			const document = new Document({
+			const document = new doc.Document({
 				title: 'document1',
 				user: user,
 				content: 'welcome to first document',
@@ -170,7 +169,7 @@ describe('Documents', () => {
 			});
 			await document.save();
 
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 			const res = await request(app)
 				.get('/api/documents/role')
 				.set('x-auth-token', token);
@@ -179,7 +178,7 @@ describe('Documents', () => {
 		});
 
 		it('should return all files with filtered conditions', async () => {
-			const document = new Document({
+			const document = new doc.Document({
 				title: 'document1',
 				user: user,
 				content: 'welcome to first document',
@@ -187,7 +186,7 @@ describe('Documents', () => {
 			});
 			// await document.save();
 
-			token = new User(user2).generateAuthToken();
+			token = new userModel.User(user2).generateAuthToken();
 			const res = await request(app)
 				.get('/api/documents')
 				.set('x-auth-token', token);
@@ -197,7 +196,7 @@ describe('Documents', () => {
 	});
 
 	describe('POST', () => {
-		const user = new User({
+		const user = new userModel.User({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
 			userName: 'kazeem08',
@@ -210,11 +209,11 @@ describe('Documents', () => {
 		});
 		let token;
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 		});
 		afterEach(async () => {
-			await User.deleteMany({});
-			await Document.deleteMany();
+			await userModel.User.deleteMany({});
+			await doc.Document.deleteMany();
 		});
 
 		it('should return 401 if user is not logged in', async () => {
@@ -277,7 +276,7 @@ describe('Documents', () => {
 	describe('PUT', () => {
 		let token;
 
-		const user = new User({
+		const user = new userModel.User({
 			firstName: 'Kazeem',
 			lastName: 'lanre',
 			userName: 'kazeem08',
@@ -289,7 +288,7 @@ describe('Documents', () => {
 			}
 		});
 
-		const document = new Document({
+		const document = new doc.Document({
 			title: 'document1',
 			user: user,
 			content: 'welcome to first document',
@@ -297,11 +296,11 @@ describe('Documents', () => {
 		});
 
 		beforeEach(() => {
-			token = new User(user).generateAuthToken();
+			token = new userModel.User(user).generateAuthToken();
 		});
 		afterEach(async () => {
-			await User.deleteMany();
-			await Document.deleteMany();
+			await userModel.User.deleteMany();
+			await doc.Document.deleteMany();
 		});
 
 		it('should return 401 if user is not logged in', async () => {
@@ -334,7 +333,7 @@ describe('Documents', () => {
 				.set('x-auth-token', token)
 				.send({ title: 'document2' });
 
-			const updatedUser = await Document.findById(document._id);
+			const updatedUser = await doc.Document.findById(document._id);
 			expect(res.status).toBe(200);
 			expect(updatedUser.title).toBe('document2');
 		});
@@ -342,7 +341,7 @@ describe('Documents', () => {
 		describe('DELETE', () => {
 			let token;
 
-			const user = new User({
+			const user = new userModel.User({
 				firstName: 'Kazeem',
 				lastName: 'lanre',
 				userName: 'kazeem08',
@@ -354,7 +353,7 @@ describe('Documents', () => {
 				}
 			});
 
-			const document = new Document({
+			const document = new doc.Document({
 				title: 'document1',
 				user: user,
 				content: 'welcome to first document',
@@ -362,11 +361,11 @@ describe('Documents', () => {
 			});
 
 			beforeEach(() => {
-				token = new User(user).generateAuthToken();
+				token = new userModel.User(user).generateAuthToken();
 			});
 			afterEach(async () => {
-				await User.deleteMany();
-				await Document.deleteMany();
+				await userModel.User.deleteMany();
+				await doc.Document.deleteMany();
 			});
 
 			it('should return 404 if ID is invalid', async () => {

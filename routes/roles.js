@@ -1,8 +1,8 @@
-import express from 'express';
-import { auth } from '../middleware/auth';
-import { admin } from '../middleware/admin';
-import { validateObjectId } from '../middleware/validateObjectId';
-import { roleController } from '../controllers/role';
+const express = require('express');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
+const validateObjectId = require('../middleware/validateObjectId');
+const roleController = require('../controllers/role');
 const router = express.Router();
 
 //route to get all roles
@@ -24,4 +24,4 @@ router.delete(
 	roleController.deleteRole
 );
 
-export { router as roles };
+module.exports = { router };

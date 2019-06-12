@@ -1,33 +1,33 @@
-import _ from 'lodash';
-import bcrypt from 'bcrypt';
-import { User, validateUser } from '../models/user';
-import { Role } from '../models/role';
+const _ = require('lodash');
+const bcrypt = require('bcrypt');
+const userModel = require('../models/user');
+const roleModel = require('../models/role');
 
 //method for creating user
 class UserController {
 	async getAllUsers(req, res) {
-		const users = await User.find();
+		const users = await userModel.User.find();
 		res.send(users);
 	}
 
 	//method for getting user by Id
 	async getById(req, res) {
-		const user = await User.findById(req.user._id);
+		const user = await userModel.User.findById(req.user._id);
 		res.send(user);
 	}
 
 	//method for creating user
 	async createUser(req, res) {
-		const { error } = validateUser(req.body);
+		const { error } = userModel.validateUser(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
 
-		let user = await User.findOne({ email: req.body.email });
+		let user = await userModel.User.findOne({ email: req.body.email });
 		if (user) return res.status(400).send('user already exist');
 
-		let role = await Role.findById(req.body.roleId);
+		let role = await roleModel.Role.findById(req.body.roleId);
 		if (!role) return res.status(400).send('Invalid role Id');
 
-		user = new User({
+		user = new userModel.User({
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
 			userName: req.body.userName,
@@ -52,7 +52,7 @@ class UserController {
 
 	//method for updating user
 	async updateUser(req, res) {
-		let user = await User.findByIdAndUpdate(
+		let user = await userModel.User.findByIdAndUpdate(
 			req.user._id,
 			{
 				firstName: req.body.firstName,
@@ -73,7 +73,7 @@ class UserController {
 
 	//method for deleting user
 	async deleteUser(req, res) {
-		let user = await User.findByIdAndDelete(req.user._id);
+		let user = await userModel.User.findByIdAndDelete(req.user._id);
 
 		res.send(user);
 	}
@@ -81,4 +81,4 @@ class UserController {
 
 const userController = new UserController();
 
-export { userController };
+module.exports = userController;
