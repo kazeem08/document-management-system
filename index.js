@@ -27,7 +27,7 @@ let option = {
 			{ name: 'Document', description: 'Document model' }
 		]
 	},
-	apis: ['./src/swagger/*.yaml']
+	apis: ['./swagger/*.yaml']
 };
 
 const spec = swaggerJsdoc(option);
