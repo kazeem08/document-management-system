@@ -6,7 +6,6 @@ const Joi = require('@hapi/joi');
 class LoginController {
 	//method for logging in
 	async login(req, res) {
-		console.log(typeof login1.validate);
 		const { error } = validateLogin(req.body);
 
 		if (error) return res.status(400).send(error.details[0].message);
