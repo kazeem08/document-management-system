@@ -79,15 +79,6 @@ path:
               password:
                 type: string
                 example: pro123
-              role:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 5ce29a0eebdb0d1e12087735
-                  title:
-                    type: string
-                    example: Regular
       responses:
         201:
           description: Successful

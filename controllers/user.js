@@ -24,7 +24,7 @@ class UserController {
 		let user = await userModel.User.findOne({ email: req.body.email });
 		if (user) return res.status(400).send('user already exist');
 
-		let role = await roleModel.Role.findById(req.body.roleId);
+		let role = await roleModel.Role.findOne({ title: 'Regular' });
 		if (!role) return res.status(400).send('Invalid role Id');
 
 		user = new userModel.User({
@@ -45,9 +45,11 @@ class UserController {
 		await user.save();
 
 		// res.send(user);
-		res.send(
-			_.pick(user, ['_id', 'firstName', 'lastName', 'userName', 'email'])
-		);
+		res
+			.status(201)
+			.send(
+				_.pick(user, ['_id', 'firstName', 'lastName', 'userName', 'email'])
+			);
 	}
 
 	//method for updating user
