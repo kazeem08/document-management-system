@@ -5,7 +5,6 @@ const Joi = require('@hapi/joi');
 const roleSchema = new mongoose.Schema({
 	title: {
 		type: String,
-		// unique: true,
 		minlength: 5,
 		maxlength: 30,
 		default: 'Regular'
@@ -16,8 +15,8 @@ const roleSchema = new mongoose.Schema({
 const Role = mongoose.model('Role', roleSchema);
 
 const roles = Role.find();
-if (roles.length > 1) {
-	Role.insertMany([{ title: 'Admin' }, { title: 'Regular' }])
+if (roles.length < 1 || roles === undefined) {
+	roleModel.Role.insertMany([{ title: 'Admin' }, { title: 'Regular' }])
 		.then(() => {})
 		.catch(err => {});
 }
