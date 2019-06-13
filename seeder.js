@@ -4,6 +4,7 @@ const roleModel = require('./models/role');
 const doc = require('./models/document');
 const faker = require('faker');
 const bcrypt = require('bcrypt');
+require('dotenv/config');
 
 const app = express();
 
@@ -67,5 +68,3 @@ const seeding = async function() {
 };
 // seed.seedDocuments();
 seeding();
-
-export { seed };

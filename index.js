@@ -44,7 +44,7 @@ errorHandling();
 jwtKey();
 routes(app);
 
-const port = process.env.PORT; //getting the port
+const port = process.env.PORT || 3000; //getting the port
 
 if (process.env.NODE_ENV !== 'test') {
 	app.listen(port, () => winston.info(`listening on port ${port}...`));
