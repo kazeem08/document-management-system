@@ -39,7 +39,8 @@ const userSchema = new mongoose.Schema({
 		maxlength: 200
 	},
 	role: {
-		type: role.roleSchema
+		type: role.roleSchema,
+		required: true
 	}
 });
 
