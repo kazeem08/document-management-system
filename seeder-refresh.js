@@ -15,6 +15,14 @@ require('./startup/db');
 app.listen(port, () => console.log(`listening on port ${port}...`));
 
 class Seeder {
+	// async seedRoles() {
+	// 	const roles = await roleModel.Role.find();
+	// 	if (roles.length < 1 || roles === undefined) {
+	// 		Role.insertMany([{ title: 'Admin' }, { title: 'Regular' }])
+	// 			.then(() => {})
+	// 			.catch(err => {});
+	// 	}
+	// }
 	async seedUsers() {
 		await userModel.User.deleteMany();
 		let role = await roleModel.Role.findOne({ title: 'Admin' });
